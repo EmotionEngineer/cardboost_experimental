@@ -1,0 +1,46 @@
+{
+  "schema": "cardboost-golden/1.0",
+  "source": "r76_work/r76_results/r87_4.jsonl (canonical r87_4_qmiss.py arm=off protocol)",
+  "note": "Entries with 'exact': true are byte-exact canonical anchors (tol=0). Entries with 'exact': false carry 7-digit values from the R87 protocol summary; tolerance 5e-7. The streaming local verification run upgrades entries to exact as its jsonl rows land. v31 is integer-exact everywhere. 'metric_fit' = OOF/train-side metric of the in-memory card; 'metric_dec' = test metric of the DECODED card (metric_mem == metric_dec; maxdiff_mem_dec == 0.0).",
+  "folds": {
+    "anneal_f0": {"panel": "anneal", "fold": 0, "kind": "binary", "exact": true, "v31": 1491, "metric_fit": {"Toof": 0.015556201491460715, "14b": 0.017507091252811337}, "metric_dec": {"Toof": 0.015608297304323386, "14b": 0.017463251602031327}},
+    "anneal_f1": {"panel": "anneal", "fold": 1, "kind": "binary", "exact": true, "v31": 1451, "metric_fit": {"Toof": 0.021360173800788907, "14b": 0.01926666388175284}, "metric_dec": {"Toof": 0.02136047316490838, "14b": 0.019306149591946636}},
+    "anneal_f2": {"panel": "anneal", "fold": 2, "kind": "binary", "exact": true, "v31": 1323, "metric_fit": {"Toof": 0.06148022697346499, "14b": 0.0476433414340271}, "metric_dec": {"Toof": 0.06163367264094017, "14b": 0.04765802449747568}},
+    "aps_f0": {"panel": "aps", "fold": 0, "kind": "binary", "exact": true, "v31": 2631, "metric_fit": {"Toof": 0.03246241347621945, "14b": 0.032474567942735795}, "metric_dec": {"Toof": 0.03245986920090248, "14b": 0.032471908467198704}},
+    "aps_f1": {"panel": "aps", "fold": 1, "kind": "binary", "exact": true, "v31": 2916, "metric_fit": {"Toof": 0.03444367106412968, "14b": 0.03450381143343125}, "metric_dec": {"Toof": 0.0344437, "14b": 0.0345038}, "dec_source": "summary-r7"},
+    "aps_f2": {"panel": "aps", "fold": 2, "kind": "binary", "exact": true, "v31": 2843, "metric_fit": {"Toof": 0.032034889018086404, "14b": 0.03204952127735326}, "metric_dec": {"Toof": 0.0320349, "14b": 0.0320495}, "dec_source": "summary-r7"},
+    "cal_rand_f0": {"panel": "california_random", "fold": 0, "kind": "regression", "exact": true, "v31": 3591, "metric_fit": {"R2": 0.8004754327779836}, "metric_dec": {"R2": 0.7991800160444765}},
+    "cal_rand_f1": {"panel": "california_random", "fold": 1, "kind": "regression", "exact": false, "v31": 2958, "metric_fit": {"R2": 0.8114081}, "metric_dec": {"R2": 0.809186}},
+    "cal_rand_f2": {"panel": "california_random", "fold": 2, "kind": "regression", "exact": false, "v31": 3470, "metric_fit": {"R2": 0.8004264}, "metric_dec": {"R2": 0.799819}},
+    "cal_rand_f3": {"panel": "california_random", "fold": 3, "kind": "regression", "exact": false, "v31": 3632, "metric_fit": {"R2": 0.8224160}, "metric_dec": {"R2": 0.822379}},
+    "cal_rand_f4": {"panel": "california_random", "fold": 4, "kind": "regression", "exact": false, "v31": 3373, "metric_fit": {"R2": 0.7969455}, "metric_dec": {"R2": 0.796336}},
+    "cal_spat_f0": {"panel": "california_spatial", "fold": 0, "kind": "regression", "exact": true, "v31": 3984, "metric_fit": {"R2": 0.5226707071175212}, "metric_dec": {"R2": 0.5183780399323737}},
+    "cal_spat_f1": {"panel": "california_spatial", "fold": 1, "kind": "regression", "exact": false, "v31": 3145, "metric_fit": {"R2": 0.6642694}, "metric_dec": {"R2": 0.663491}},
+    "cal_spat_f2": {"panel": "california_spatial", "fold": 2, "kind": "regression", "exact": false, "v31": 3486, "metric_fit": {"R2": 0.5381595}, "metric_dec": {"R2": 0.537133}},
+    "cal_spat_f3": {"panel": "california_spatial", "fold": 3, "kind": "regression", "exact": false, "v31": 3700, "metric_fit": {"R2": 0.7363650}, "metric_dec": {"R2": 0.736047}},
+    "cal_spat_f4": {"panel": "california_spatial", "fold": 4, "kind": "regression", "exact": false, "v31": 2603, "metric_fit": {"R2": 0.0610103}, "metric_dec": {"R2": 0.061733}}
+  },
+  "tolerance": {"exact": 0.0, "inexact": 5e-7, "v31": 0},
+  "synthetic_controls": {
+    "q_miss_threshold": {
+      "description": "positive control: synthetic threshold effect visible only for rows with >= 3 missings (canonical r87_qmiss.py control protocol)",
+      "gain_nats": 49.93,
+      "barrier_nats": 4.70,
+      "wallet_bytes": 237,
+      "assert": "gain > barrier and wallet <= 4096"
+    },
+    "safe_grid_quadratic": {
+      "description": "SafeGrid prototype on pure 2D quadratic: joint 8x8 grid 1147.67 vs univariate sum 161.02 (528 B vs 473 B), barrier 33.46",
+      "gain_joint_nats": 1147.67,
+      "gain_univariate_nats": 161.02,
+      "barrier_nats": 33.46,
+      "assert": "joint > univariate > barrier"
+    }
+  },
+  "deploy_checks": {
+    "aps_toof_deploy_mean": 0.03298,
+    "wallet_budget_bytes": 4096,
+    "decode_max_diff": 0.0,
+    "moved_train": 0
+  }
+}
