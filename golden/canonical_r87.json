@@ -1,46 +1,610 @@
 {
-  "schema": "cardboost-golden/1.0",
-  "source": "r76_work/r76_results/r87_4.jsonl (canonical r87_4_qmiss.py arm=off protocol)",
-  "note": "Entries with 'exact': true are byte-exact canonical anchors (tol=0). Entries with 'exact': false carry 7-digit values from the R87 protocol summary; tolerance 5e-7. The streaming local verification run upgrades entries to exact as its jsonl rows land. v31 is integer-exact everywhere. 'metric_fit' = OOF/train-side metric of the in-memory card; 'metric_dec' = test metric of the DECODED card (metric_mem == metric_dec; maxdiff_mem_dec == 0.0).",
-  "folds": {
-    "anneal_f0": {"panel": "anneal", "fold": 0, "kind": "binary", "exact": true, "v31": 1491, "metric_fit": {"Toof": 0.015556201491460715, "14b": 0.017507091252811337}, "metric_dec": {"Toof": 0.015608297304323386, "14b": 0.017463251602031327}},
-    "anneal_f1": {"panel": "anneal", "fold": 1, "kind": "binary", "exact": true, "v31": 1451, "metric_fit": {"Toof": 0.021360173800788907, "14b": 0.01926666388175284}, "metric_dec": {"Toof": 0.02136047316490838, "14b": 0.019306149591946636}},
-    "anneal_f2": {"panel": "anneal", "fold": 2, "kind": "binary", "exact": true, "v31": 1323, "metric_fit": {"Toof": 0.06148022697346499, "14b": 0.0476433414340271}, "metric_dec": {"Toof": 0.06163367264094017, "14b": 0.04765802449747568}},
-    "aps_f0": {"panel": "aps", "fold": 0, "kind": "binary", "exact": true, "v31": 2631, "metric_fit": {"Toof": 0.03246241347621945, "14b": 0.032474567942735795}, "metric_dec": {"Toof": 0.03245986920090248, "14b": 0.032471908467198704}},
-    "aps_f1": {"panel": "aps", "fold": 1, "kind": "binary", "exact": true, "v31": 2916, "metric_fit": {"Toof": 0.03444367106412968, "14b": 0.03450381143343125}, "metric_dec": {"Toof": 0.0344437, "14b": 0.0345038}, "dec_source": "summary-r7"},
-    "aps_f2": {"panel": "aps", "fold": 2, "kind": "binary", "exact": true, "v31": 2843, "metric_fit": {"Toof": 0.032034889018086404, "14b": 0.03204952127735326}, "metric_dec": {"Toof": 0.0320349, "14b": 0.0320495}, "dec_source": "summary-r7"},
-    "cal_rand_f0": {"panel": "california_random", "fold": 0, "kind": "regression", "exact": true, "v31": 3591, "metric_fit": {"R2": 0.8004754327779836}, "metric_dec": {"R2": 0.7991800160444765}},
-    "cal_rand_f1": {"panel": "california_random", "fold": 1, "kind": "regression", "exact": false, "v31": 2958, "metric_fit": {"R2": 0.8114081}, "metric_dec": {"R2": 0.809186}},
-    "cal_rand_f2": {"panel": "california_random", "fold": 2, "kind": "regression", "exact": false, "v31": 3470, "metric_fit": {"R2": 0.8004264}, "metric_dec": {"R2": 0.799819}},
-    "cal_rand_f3": {"panel": "california_random", "fold": 3, "kind": "regression", "exact": false, "v31": 3632, "metric_fit": {"R2": 0.8224160}, "metric_dec": {"R2": 0.822379}},
-    "cal_rand_f4": {"panel": "california_random", "fold": 4, "kind": "regression", "exact": false, "v31": 3373, "metric_fit": {"R2": 0.7969455}, "metric_dec": {"R2": 0.796336}},
-    "cal_spat_f0": {"panel": "california_spatial", "fold": 0, "kind": "regression", "exact": true, "v31": 3984, "metric_fit": {"R2": 0.5226707071175212}, "metric_dec": {"R2": 0.5183780399323737}},
-    "cal_spat_f1": {"panel": "california_spatial", "fold": 1, "kind": "regression", "exact": false, "v31": 3145, "metric_fit": {"R2": 0.6642694}, "metric_dec": {"R2": 0.663491}},
-    "cal_spat_f2": {"panel": "california_spatial", "fold": 2, "kind": "regression", "exact": false, "v31": 3486, "metric_fit": {"R2": 0.5381595}, "metric_dec": {"R2": 0.537133}},
-    "cal_spat_f3": {"panel": "california_spatial", "fold": 3, "kind": "regression", "exact": false, "v31": 3700, "metric_fit": {"R2": 0.7363650}, "metric_dec": {"R2": 0.736047}},
-    "cal_spat_f4": {"panel": "california_spatial", "fold": 4, "kind": "regression", "exact": false, "v31": 2603, "metric_fit": {"R2": 0.0610103}, "metric_dec": {"R2": 0.061733}}
-  },
-  "tolerance": {"exact": 0.0, "inexact": 5e-7, "v31": 0},
-  "synthetic_controls": {
-    "q_miss_threshold": {
-      "description": "positive control: synthetic threshold effect visible only for rows with >= 3 missings (canonical r87_qmiss.py control protocol)",
-      "gain_nats": 49.93,
-      "barrier_nats": 4.70,
-      "wallet_bytes": 237,
-      "assert": "gain > barrier and wallet <= 4096"
+  "_provenance": {
+    "cross_checks_h3": {
+      "anneal_14b_deploy_mean_dec": 0.028142475230484548,
+      "anneal_wallets": [
+        1491,
+        1451,
+        1323
+      ],
+      "aps_wallets": [
+        2631,
+        2916,
+        2843
+      ],
+      "cal_rand_f0_v31": 3591,
+      "cal_wallet_max": 3984
     },
-    "safe_grid_quadratic": {
-      "description": "SafeGrid prototype on pure 2D quadratic: joint 8x8 grid 1147.67 vs univariate sum 161.02 (528 B vs 473 B), barrier 33.46",
-      "gain_joint_nats": 1147.67,
-      "gain_univariate_nats": 161.02,
-      "barrier_nats": 33.46,
-      "assert": "joint > univariate > barrier"
-    }
+    "cross_checks_phase": {
+      "anneal_14b_deploy_mean_dec": 0.026054973058406632,
+      "anneal_14b_deploy_mean_fit": 0.026066719721068526,
+      "anneal_wallets": [
+        1297,
+        1293,
+        1176
+      ],
+      "aps_wallets": [
+        2631,
+        2916,
+        2843
+      ],
+      "cal_rand_f0_v31": 2548,
+      "cal_wallet_max": 2888
+    },
+    "folds": "PHASE family = card_v8_base = r87_1 arm=phase (p_phase_law=True + COMPRESS_UCUTS 'Formula 2'): TЗ anchors 2548 B / anneal 14b ~0.02605 (gate anchor .0260495) / anneal wallets 1297/1293/1176 / cal wallet list 2548/2232/2758/2843/2621/2703/2415/2888/2747/1939",
+    "h3_folds": "H3 control family = r87_4 arm=off (= r87_1 arm=off) = report SS5.1 panel rows: 3591 B / anneal 14b deploy-mean 0.0281425 / anneal wallets 1491/1451/1323; per-fold rows are the deployed-base ground truth on the canonical m32-portrait protocol",
+    "measurement_bases": "0.0260495 = R109 phase gate anchor (round record, bit-exact r86_4_restore; R108 fold-mean recording 0.02607/0.02605 fit/dec); 0.0281425 = H3-family anneal deploy-mean - different measurement bases AND different modes, per report S3.1 note",
+    "packaging": "wallet = gzip-9 stream of the container (cal_rand_f0: raw 5353 B uncompressed -> 3591 B m32-portrait wallet / 2548 B Formula-2 packed wallet); CLI gzip = wallet + 12 B",
+    "shared": "aps .03298 (2631/2916/2843 B) and cal metrics (.80538/.50336, spat f4 +.06173) are BIT-XARM (identical in both families)",
+    "source_rows": "h3_folds: r76_work/r76_results/r87_4.jsonl arm=off (16/16 exact); folds: r76_work/r76_results/r87_1.jsonl arm=phase (5 verified + 11 xarm/report-inherited, flagged per-row)",
+    "status": "PROVISIONAL candidate - dual-family binding DONE 2026-11-20 (user decision: v8 = R109 phase family); certification pending P2 full-protocol re-verify + Linux golden run"
   },
   "deploy_checks": {
     "aps_toof_deploy_mean": 0.03298,
-    "wallet_budget_bytes": 4096,
     "decode_max_diff": 0.0,
-    "moved_train": 0
+    "moved_train": 0,
+    "wallet_budget_bytes": 4096
+  },
+  "folds": {
+    "anneal_f0": {
+      "dec": {
+        "14b": 0.01712937656530835,
+        "Toof": 0.01727664026372757
+      },
+      "exact": true,
+      "kind": "multiclass",
+      "metrics": {
+        "14b": 0.017154377599081467,
+        "Toof": 0.017293655045400768
+      },
+      "source": "r87_1.jsonl arm=phase (verified 2026-11-20)",
+      "v31": 1297
+    },
+    "anneal_f1": {
+      "dec": {
+        "14b": 0.018417769546663444,
+        "Toof": 0.02063539363586912
+      },
+      "exact": true,
+      "kind": "multiclass",
+      "metrics": {
+        "14b": 0.018359248513995747,
+        "Toof": 0.020504558334383933
+      },
+      "source": "r87_1.jsonl arm=phase (verified 2026-11-20)",
+      "v31": 1293
+    },
+    "anneal_f2": {
+      "dec": {
+        "14b": 0.04261777306324809,
+        "Toof": 0.057555490244744774
+      },
+      "exact": true,
+      "kind": "multiclass",
+      "metrics": {
+        "14b": 0.04268653305012837,
+        "Toof": 0.05778439132080973
+      },
+      "source": "r87_1.jsonl arm=phase (verified 2026-11-20)",
+      "v31": 1176
+    },
+    "aps_f0": {
+      "dec": {
+        "14b": 0.032471908467198704,
+        "Toof": 0.03245986920090248
+      },
+      "exact": false,
+      "kind": "binary",
+      "metrics": {
+        "14b": 0.032474567942735795,
+        "Toof": 0.03246241347621945
+      },
+      "source": "bit-xarm (aps wallets/metrics identical across arms, R87 report) - pending P2 re-verify",
+      "v31": 2631
+    },
+    "aps_f1": {
+      "dec": {
+        "14b": 0.034476512341990104,
+        "Toof": 0.034421649214828494
+      },
+      "exact": false,
+      "kind": "binary",
+      "metrics": {
+        "14b": 0.03450381143343125,
+        "Toof": 0.03444367106412968
+      },
+      "source": "bit-xarm (aps wallets/metrics identical across arms, R87 report) - pending P2 re-verify",
+      "v31": 2916
+    },
+    "aps_f2": {
+      "dec": {
+        "14b": 0.032063837808575586,
+        "Toof": 0.03204939599775354
+      },
+      "exact": false,
+      "kind": "binary",
+      "metrics": {
+        "14b": 0.03204952127735326,
+        "Toof": 0.032034889018086404
+      },
+      "source": "bit-xarm (aps wallets/metrics identical across arms, R87 report) - pending P2 re-verify",
+      "v31": 2843
+    },
+    "cal_rand_f0": {
+      "dec": {
+        "R2": 0.7991800160444765
+      },
+      "exact": true,
+      "kind": "regression",
+      "metrics": {
+        "R2": 0.8004754327779836
+      },
+      "source": "r87_1.jsonl arm=phase (verified 2026-11-20)",
+      "v31": 2548
+    },
+    "cal_rand_f1": {
+      "dec": {
+        "R2": 0.8091864258946289
+      },
+      "exact": false,
+      "kind": "regression",
+      "metrics": {
+        "R2": 0.8123568746852035
+      },
+      "source": "cal wallet from R87-1 10-panel list; metrics bit-xarm vs H3 ref - pending P2 re-verify",
+      "v31": 2232
+    },
+    "cal_rand_f2": {
+      "dec": {
+        "R2": 0.7998188853112789
+      },
+      "exact": false,
+      "kind": "regression",
+      "metrics": {
+        "R2": 0.8015329644934047
+      },
+      "source": "cal wallet from R87-1 10-panel list; metrics bit-xarm vs H3 ref - pending P2 re-verify",
+      "v31": 2758
+    },
+    "cal_rand_f3": {
+      "dec": {
+        "R2": 0.8223794671472646
+      },
+      "exact": false,
+      "kind": "regression",
+      "metrics": {
+        "R2": 0.8245125953419035
+      },
+      "source": "cal wallet from R87-1 10-panel list; metrics bit-xarm vs H3 ref - pending P2 re-verify",
+      "v31": 2843
+    },
+    "cal_rand_f4": {
+      "dec": {
+        "R2": 0.7963360244591577
+      },
+      "exact": false,
+      "kind": "regression",
+      "metrics": {
+        "R2": 0.7969215351374818
+      },
+      "source": "cal wallet from R87-1 10-panel list; metrics bit-xarm vs H3 ref - pending P2 re-verify",
+      "v31": 2621
+    },
+    "cal_spat_f0": {
+      "dec": {
+        "R2": 0.5183782946744144
+      },
+      "exact": true,
+      "kind": "regression",
+      "metrics": {
+        "R2": 0.5224333627605484
+      },
+      "source": "r87_1.jsonl arm=phase (verified 2026-11-20)",
+      "v31": 2703
+    },
+    "cal_spat_f1": {
+      "dec": {
+        "R2": 0.6634914865645326
+      },
+      "exact": false,
+      "kind": "regression",
+      "metrics": {
+        "R2": 0.6665944356073876
+      },
+      "source": "cal wallet from R87-1 10-panel list; metrics bit-xarm vs H3 ref - pending P2 re-verify",
+      "v31": 2415
+    },
+    "cal_spat_f2": {
+      "dec": {
+        "R2": 0.5371326806189071
+      },
+      "exact": false,
+      "kind": "regression",
+      "metrics": {
+        "R2": 0.5642202400233185
+      },
+      "source": "cal wallet from R87-1 10-panel list; metrics bit-xarm vs H3 ref - pending P2 re-verify",
+      "v31": 2888
+    },
+    "cal_spat_f3": {
+      "dec": {
+        "R2": 0.7360471416153621
+      },
+      "exact": false,
+      "kind": "regression",
+      "metrics": {
+        "R2": 0.7480262755335649
+      },
+      "source": "cal wallet from R87-1 10-panel list; metrics bit-xarm vs H3 ref - pending P2 re-verify",
+      "v31": 2747
+    },
+    "cal_spat_f4": {
+      "dec": {
+        "R2": 0.06173345128383467
+      },
+      "exact": false,
+      "kind": "regression",
+      "metrics": {
+        "R2": 0.061008018264277486
+      },
+      "source": "cal wallet from R87-1 10-panel list; metrics bit-xarm vs H3 ref - pending P2 re-verify",
+      "v31": 1939
+    }
+  },
+  "h3_folds": {
+    "anneal_f0": {
+      "dec": {
+        "14b": 0.017463251602031327,
+        "Toof": 0.015608297304323386
+      },
+      "exact": true,
+      "fold": 0,
+      "kind": "multiclass",
+      "metric_dec": {
+        "14b": 0.017463251602031327,
+        "Toof": 0.015608297304323386
+      },
+      "metric_fit": {
+        "14b": 0.017507091252811337,
+        "Toof": 0.015556201491460715
+      },
+      "metrics": {
+        "14b": 0.017507091252811337,
+        "Toof": 0.015556201491460715
+      },
+      "panel": "anneal",
+      "v31": 1491
+    },
+    "anneal_f1": {
+      "dec": {
+        "14b": 0.019306149591946636,
+        "Toof": 0.02136047316490838
+      },
+      "exact": true,
+      "fold": 1,
+      "kind": "multiclass",
+      "metric_dec": {
+        "14b": 0.019306149591946636,
+        "Toof": 0.02136047316490838
+      },
+      "metric_fit": {
+        "14b": 0.01926666388175284,
+        "Toof": 0.021360173800788907
+      },
+      "metrics": {
+        "14b": 0.01926666388175284,
+        "Toof": 0.021360173800788907
+      },
+      "panel": "anneal",
+      "v31": 1451
+    },
+    "anneal_f2": {
+      "dec": {
+        "14b": 0.04765802449747568,
+        "Toof": 0.06163367264094017
+      },
+      "exact": true,
+      "fold": 2,
+      "kind": "multiclass",
+      "metric_dec": {
+        "14b": 0.04765802449747568,
+        "Toof": 0.06163367264094017
+      },
+      "metric_fit": {
+        "14b": 0.0476433414340271,
+        "Toof": 0.06148022697346499
+      },
+      "metrics": {
+        "14b": 0.0476433414340271,
+        "Toof": 0.06148022697346499
+      },
+      "panel": "anneal",
+      "v31": 1323
+    },
+    "aps_f0": {
+      "dec": {
+        "14b": 0.032471908467198704,
+        "Toof": 0.03245986920090248
+      },
+      "exact": true,
+      "fold": 0,
+      "kind": "binary",
+      "metric_dec": {
+        "14b": 0.032471908467198704,
+        "Toof": 0.03245986920090248
+      },
+      "metric_fit": {
+        "14b": 0.032474567942735795,
+        "Toof": 0.03246241347621945
+      },
+      "metrics": {
+        "14b": 0.032474567942735795,
+        "Toof": 0.03246241347621945
+      },
+      "panel": "aps",
+      "v31": 2631
+    },
+    "aps_f1": {
+      "dec": {
+        "14b": 0.034476512341990104,
+        "Toof": 0.034421649214828494
+      },
+      "dec_source": "summary-r7",
+      "exact": true,
+      "fold": 1,
+      "kind": "binary",
+      "metric_dec": {
+        "14b": 0.0345038,
+        "Toof": 0.0344437
+      },
+      "metric_fit": {
+        "14b": 0.03450381143343125,
+        "Toof": 0.03444367106412968
+      },
+      "metrics": {
+        "14b": 0.03450381143343125,
+        "Toof": 0.03444367106412968
+      },
+      "panel": "aps",
+      "v31": 2916
+    },
+    "aps_f2": {
+      "dec": {
+        "14b": 0.032063837808575586,
+        "Toof": 0.03204939599775354
+      },
+      "dec_source": "summary-r7",
+      "exact": true,
+      "fold": 2,
+      "kind": "binary",
+      "metric_dec": {
+        "14b": 0.0320495,
+        "Toof": 0.0320349
+      },
+      "metric_fit": {
+        "14b": 0.03204952127735326,
+        "Toof": 0.032034889018086404
+      },
+      "metrics": {
+        "14b": 0.03204952127735326,
+        "Toof": 0.032034889018086404
+      },
+      "panel": "aps",
+      "v31": 2843
+    },
+    "cal_rand_f0": {
+      "dec": {
+        "R2": 0.7991800160444765
+      },
+      "exact": true,
+      "fold": 0,
+      "kind": "regression",
+      "metric_dec": {
+        "R2": 0.7991800160444765
+      },
+      "metric_fit": {
+        "R2": 0.8004754327779836
+      },
+      "metrics": {
+        "R2": 0.8004754327779836
+      },
+      "panel": "california_random",
+      "v31": 3591
+    },
+    "cal_rand_f1": {
+      "dec": {
+        "R2": 0.8091864258946289
+      },
+      "exact": true,
+      "fold": 1,
+      "kind": "regression",
+      "metric_dec": {
+        "R2": 0.809186
+      },
+      "metric_fit": {
+        "R2": 0.8114081
+      },
+      "metrics": {
+        "R2": 0.8123568746852035
+      },
+      "panel": "california_random",
+      "v31": 2958
+    },
+    "cal_rand_f2": {
+      "dec": {
+        "R2": 0.7998188853112789
+      },
+      "exact": true,
+      "fold": 2,
+      "kind": "regression",
+      "metric_dec": {
+        "R2": 0.799819
+      },
+      "metric_fit": {
+        "R2": 0.8004264
+      },
+      "metrics": {
+        "R2": 0.8015329644934047
+      },
+      "panel": "california_random",
+      "v31": 3470
+    },
+    "cal_rand_f3": {
+      "dec": {
+        "R2": 0.8223794671472646
+      },
+      "exact": true,
+      "fold": 3,
+      "kind": "regression",
+      "metric_dec": {
+        "R2": 0.822379
+      },
+      "metric_fit": {
+        "R2": 0.822416
+      },
+      "metrics": {
+        "R2": 0.8245125953419035
+      },
+      "panel": "california_random",
+      "v31": 3632
+    },
+    "cal_rand_f4": {
+      "dec": {
+        "R2": 0.7963360244591577
+      },
+      "exact": true,
+      "fold": 4,
+      "kind": "regression",
+      "metric_dec": {
+        "R2": 0.796336
+      },
+      "metric_fit": {
+        "R2": 0.7969455
+      },
+      "metrics": {
+        "R2": 0.7969215351374818
+      },
+      "panel": "california_random",
+      "v31": 3373
+    },
+    "cal_spat_f0": {
+      "dec": {
+        "R2": 0.5183782946744144
+      },
+      "exact": true,
+      "fold": 0,
+      "kind": "regression",
+      "metric_dec": {
+        "R2": 0.5183780399323737
+      },
+      "metric_fit": {
+        "R2": 0.5226707071175212
+      },
+      "metrics": {
+        "R2": 0.5224333627605484
+      },
+      "panel": "california_spatial",
+      "v31": 3984
+    },
+    "cal_spat_f1": {
+      "dec": {
+        "R2": 0.6634914865645326
+      },
+      "exact": true,
+      "fold": 1,
+      "kind": "regression",
+      "metric_dec": {
+        "R2": 0.663491
+      },
+      "metric_fit": {
+        "R2": 0.6642694
+      },
+      "metrics": {
+        "R2": 0.6665944356073876
+      },
+      "panel": "california_spatial",
+      "v31": 3145
+    },
+    "cal_spat_f2": {
+      "dec": {
+        "R2": 0.5371326806189071
+      },
+      "exact": true,
+      "fold": 2,
+      "kind": "regression",
+      "metric_dec": {
+        "R2": 0.537133
+      },
+      "metric_fit": {
+        "R2": 0.5381595
+      },
+      "metrics": {
+        "R2": 0.5642202400233185
+      },
+      "panel": "california_spatial",
+      "v31": 3486
+    },
+    "cal_spat_f3": {
+      "dec": {
+        "R2": 0.7360471416153621
+      },
+      "exact": true,
+      "fold": 3,
+      "kind": "regression",
+      "metric_dec": {
+        "R2": 0.736047
+      },
+      "metric_fit": {
+        "R2": 0.736365
+      },
+      "metrics": {
+        "R2": 0.7480262755335649
+      },
+      "panel": "california_spatial",
+      "v31": 3700
+    },
+    "cal_spat_f4": {
+      "dec": {
+        "R2": 0.06173345128383467
+      },
+      "exact": true,
+      "fold": 4,
+      "kind": "regression",
+      "metric_dec": {
+        "R2": 0.061733
+      },
+      "metric_fit": {
+        "R2": 0.0610103
+      },
+      "metrics": {
+        "R2": 0.061008018264277486
+      },
+      "panel": "california_spatial",
+      "v31": 2603
+    }
+  },
+  "note": "Entries with 'exact': true are byte-exact canonical anchors (tol=0). Entries with 'exact': false carry 7-digit values from the R87 protocol summary; tolerance 5e-7. The streaming local verification run upgrades entries to exact as its jsonl rows land. v31 is integer-exact everywhere. 'metric_fit' = OOF/train-side metric of the in-memory card; 'metric_dec' = test metric of the DECODED card (metric_mem == metric_dec; maxdiff_mem_dec == 0.0).",
+  "schema": "cardboost-golden/1.0",
+  "source": "r76_work/r76_results/r87_4.jsonl (canonical r87_4_qmiss.py arm=off protocol)",
+  "synthetic_controls": {
+    "q_miss_threshold": {
+      "assert": "gain > barrier and wallet <= 4096",
+      "barrier_nats": 4.7,
+      "description": "positive control: synthetic threshold effect visible only for rows with >= 3 missings (canonical r87_qmiss.py control protocol)",
+      "gain_nats": 49.93,
+      "wallet_bytes": 237
+    },
+    "safe_grid_quadratic": {
+      "assert": "joint > univariate > barrier",
+      "barrier_nats": 33.46,
+      "description": "SafeGrid prototype on pure 2D quadratic: joint 8x8 grid 1147.67 vs univariate sum 161.02 (528 B vs 473 B), barrier 33.46",
+      "gain_joint_nats": 1147.67,
+      "gain_univariate_nats": 161.02
+    }
+  },
+  "tolerance": {
+    "exact": 0.0,
+    "inexact": 5e-07,
+    "v31": 0
   }
 }

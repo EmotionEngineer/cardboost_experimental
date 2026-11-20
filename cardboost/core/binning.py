@@ -6,14 +6,19 @@ flips because a *decision* (pair ranking / DP argmax) compares float64 sums
 that differ by 1 ULP across SIMD implementations (AVX2 vs NEON).
 
 Mitigation implemented here: round decision scores to 12 significant decimals
-and break exact ties lexicographically.  Applied by the engine wrapper at the
-screening-score boundary (see ``engine.fit_fold``); the vendored DP accumulators
-already sum in a fixed index order.
+and break exact ties lexicographically.  Wired into the **export/presentation
+surfaces** (``explain.scorecard_table`` levels/points, ``explain.anova``
+ordering).  The FIT path is intentionally left unrounded so the engine stays
+bit-exact with the frozen reference rows; the residual cross-platform gaps
+(libm ulps at ``exp/log``, sort tie-ordering inside the vendored screening) are
+documented in README "Platform sensitivity" and handled by the golden tier
+system (tests/golden_util.py): bit-exact on Linux x86-64, tight tolerance when
+the wallet matches, structural mode + full drift report otherwise.
 
 Golden anchors are defined with the canonical Linux x86-64 reference values in
-``golden/canonical_r87.json``; with ``deterministic_ulp=True`` the anchors are
-expected to hold on every platform (verified per-platform by running the golden
-suite).
+``golden/canonical_r87.json``; on that platform the anchors hold bit-exactly.
+On other platforms `deterministic_ulp` narrows the drift but does not eliminate
+it (the documented gap above) -- the golden suite grades such runs structurally.
 """
 from __future__ import annotations
 

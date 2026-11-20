@@ -56,7 +56,7 @@ def _temperature(spec):
 class _CardBoostBase(BaseEstimator):
     # ---- constructor: sklearn clone contract (store args verbatim) -------
     def __init__(self, preset="v8", max_bins=32, lr="formula", km="formula",
-                 dead_col_law="phase_v32", currency="h3", enable_pairs=True,
+                 dead_col_law=None, currency="h3", enable_pairs=True,
                  atom_families=("g4", "p1", "m2"), ledger_mode="greedy",
                  warm_passes=6, edge_freeze=False, hmin_frac=0.0,
                  oof_merge=False, calibration="auto",
@@ -117,6 +117,12 @@ class _CardBoostBase(BaseEstimator):
             ov["star_types"] = (("g4a", "g4b", "g4c", "g4d", "p1", "m2")
                                 if self.enable_pairs
                                 else ("g4a", "g4b", "g4c", "g4d"))
+        if self.dead_col_law is not None:
+            # explicit mode override: "phase_v32" -> phase arm, "h3" -> control
+            law = self.dead_col_law == "phase_v32"
+            ov["dead_col_law"] = self.dead_col_law
+            ov["p_phase_law"] = law
+            ov["compress_ucuts"] = law
         get_preset(self.preset)  # validate early
         return ov
 

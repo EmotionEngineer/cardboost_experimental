@@ -38,7 +38,10 @@ class PresetConfig:
     km: object = "formula"                   # (km="formula")
     warm_passes: int = 6                     # (warm_passes=6)
     solver: str = "gs"                       # (solver="gs")
-    dead_col_law: str = "phase_v32"          # engine: p_active_law=False, p_phase_law=False
+    dead_col_law: str = "phase_v32"          # "phase_v32" -> p_phase_law=True (R109);
+                                             # "h3"        -> p_phase_law=False (H3 control)
+    p_phase_law: bool = True                 # R109 deterministic phase thresholds (champion)
+    compress_ucuts: bool = True              # R109 Formula 2: lossless active-cut packing
     currency: str = "h3"                     # (R84_COST scale=1/sigma2_oof on cal, pair_exempt)
     nom_perm: Optional[bool] = None          # None -> engine rule: not california
     enable_pairs: bool = True
@@ -74,12 +77,15 @@ class PresetConfig:
 
 _PRESETS = {
     # Frozen champion of R87: H3 + phase_v32 + #5 nom_perm + Opus merge + IsoLink-OOF.
-    # Engine knob values below are EXACTLY the canonical `_cfg` of the R87 pipeline
-    # that produced golden/canonical_r87.json.
+    # `card_v8_base` = the R109 PHASE arm (decision 2026-11-20): p_phase_law=True +
+    # COMPRESS_UCUTS (Formula 2 live-cut packing).  Golden target: "folds" in
+    # golden/canonical_r87.json (2548 B-family wallets, anneal 14b ~0.02605).
     "v8": PresetConfig(name="v8"),
-    # R84--R85 canonical harness: identical numeric path in v1.0 (see README
-    # "Preset equivalence"); kept as a separate name for bit-exact paper tables.
-    "v7_h3": PresetConfig(name="v7_h3"),
+    # R84--R85 canonical harness = the H3 control arm (r87_4 `--arm off` /
+    # r87_1 `--arm off`): p_phase_law=False, COMPRESS_UCUTS=False.  Golden
+    # target: "h3_folds" (3591 B-family wallets, anneal 14b ~0.02814).
+    "v7_h3": PresetConfig(name="v7_h3", dead_col_law="h3",
+                          p_phase_law=False, compress_ucuts=False),
     # R98 nested S_jx32 grids + R113 safe tier + beam-3, wallet up to 16384 B.
     "iid_max": PresetConfig(
         name="iid_max", include_safe_tier=True, ledger_mode="beam3",

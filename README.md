@@ -39,7 +39,7 @@ cert = model.certify(X_train, X_test)                # decode determinism audit
 
 ## Golden tests are the contract
 
-The package's acceptance criterion is *exact reproduction of the certified R87
+The package's acceptance criterion is *exact reproduction of the frozen R87
 metrics*.  `tests/` re-runs the canonical protocol against bundled data
 (**no network**):
 
@@ -48,8 +48,11 @@ python -m pytest -m "not golden"       # fast suite (~2 min)
 python -m pytest -m golden             # acceptance suite (~1-2 h)
 ```
 
-* **Anchors** (`test_golden_anchors.py`): `cal_rand f0` — fit R²
-  **0.8004754327779836**, decoded R² **0.7991800160444765**, v31 **3591 B**;
+* **Anchors** (`test_golden_anchors.py`, both mode families):
+  `v8` (R109 phase = `card_v8_base`): `cal_rand f0` — fit R²
+  **0.8004754327779836**, decoded R² **0.7991800160444765**, v31 **2548 B**;
+  `anneal f0` — Toof 0.017293655045400768 → decoded 0.01727664026372757,
+  v31 **1297 B**.  `v7_h3` (H3 control): the same cal metrics at v31 **3591 B**;
   `anneal f0` — Toof 0.015556201491460715 → decoded 0.015608297304323386,
   v31 1491 B.
 * **Full protocol** (`test_golden_full16.py`): all 16 folds
@@ -65,14 +68,20 @@ python -m pytest -m golden             # acceptance suite (~1-2 h)
   effect (gain 49.93 nats > barrier 4.70) and the SafeGrid quadratic probe
   (joint grid ≫ univariate sum).
 
-Entries marked `"exact": true` in the golden table are byte-exact anchors
-(tol = 0).  The few `"exact": false` rows carry 7-digit summary values with a
-5e-7 tolerance; they are upgraded to exact as the streaming verification run
-lands its jsonl rows.  **Linux x86-64 is the canonical platform** (the suite
-sets single-thread BLAS itself).  On Apple Silicon 5/6 families are
-bit-exact; the two libm-sensitive rows (`anneal_f0`, `cal_spat_f4`) are
-skipped there, or run with `CARDBOOST_GOLDEN_TOL=1e-9` to accept last-ulp
-drift.
+All 16 golden rows carry full-precision values (`metric_fit` + `metric_dec` +
+wallet) sourced from the reference driver rows (`r76_results/r87_4.jsonl`,
+`arm=off`); on Linux x86-64 every row is compared bit-exactly (tol = 0).
+**Linux x86-64 is the canonical platform** (the suite
+sets single-thread BLAS itself).  On other platforms the suite is
+platform-aware (see `tests/golden_util.py`):
+
+| tier | Linux x86-64 | Apple Silicon (M4 canary) |
+|---|---|---|
+| california / aps cards (v31, moved_train, decode) | bit-exact | bit-exact (observed) |
+| Toof/14b metric evaluation | bit-exact | libm ulp (~4e-11) → `CARDBOOST_GOLDEN_TOL` default 1e-8 |
+| knife-edge rows (`anneal_*`, `cal_spat_f4`) | bit-exact | structural mode: invariants + 5e-3 metric band + report line |
+
+`CARDBOOST_GOLDEN_STRICT=1` forces bit-exact checks on any platform.
 
 ## Presets — *Zero-Tuning Champion by Default, Full Arsenal on Demand*
 
@@ -134,7 +143,7 @@ cardboost/
   plot/                matplotlib figures + self-contained HTML report (inline SVG)
   _vendor/             the certified R71–R87 mechanism stack (unmodified)
 data_cache/            california_housing.npz, anneal.data/test, aps_failure_sample.csv
-golden/canonical_r87.json   the 16-fold certified metric table
+golden/canonical_r87.json   the 16-fold canonical metric table (see PROVENANCE.md)
 tests/                 golden suite (see above)
 ```
 
@@ -143,12 +152,33 @@ tests/                 golden suite (see above)
 The R87 study (glass-box scorecards as a rate-distortion problem) certified
 `card_v8_base` across six dataset families with wallets ≤ 3984 B and
 decode ≡ memory scoring.  This package **replays that pipeline verbatim**
-(`cardboost/core/engine.py` mirrors `r87_4_qmiss.py`'s `fold_fit` block;
+(`cardboost/core/engine.py` mirrors the canonical `fold_fit` block with the
+two mode knobs of the R87 decision: preset `v8` = the R109 **phase** arm
+(`p_phase_law=True` + `COMPRESS_UCUTS` Formula-2 live-cut packing), preset
+`v7_h3` = the H3 control arm (`--arm off`);
 the mechanism stack under `_vendor/` is unmodified).  Canonical numbers were
 produced on Linux x86-64; a Mac Mini M4 reproduces 5/6 families bit-exact
 (see the golden note above).  No network access is required — all datasets
 are bundled in `data_cache/`.
 
+**Certification status (2026-11-20): PROVISIONAL candidate.** The mode→number
+binding is complete (`PROVENANCE.md`) and the user decision is implemented:
+`v8` = R109 phase family (2548 B / anneal ≈0.02605 / wallets ≤1297·≤2916),
+`v7_h3` = H3 family (3591 B / anneal 0.0281425). The formal `card_v8_base`
+certification label stays withheld until the full-protocol re-verify of the
+inherited golden rows lands and the Linux golden run passes both families.
+
+Platform sensitivity details (why some rows can drift off-canonical):
+* **libm**: Toof/14b metrics use `exp/log`; Apple's libm can differ from
+  glibc at the last ulp — set `CARDBOOST_GOLDEN_TOL=1e-9` to accept that.
+* **sort tie-ordering**: the quantile fits sort discrete/integer features
+  with many exact ties; tie order is deterministic *within* a numpy build
+  but not guaranteed across numpy versions/platforms (the documented
+  `deterministic_ulp` coverage gap).  The anneal family (small, discrete)
+  is the most exposed — hence the documented skips on Apple Silicon.
+  For bit-exact acceptance use Linux x86-64 with the pinned BLAS threads
+  (the test suite sets them itself).
+
 ## License
 
-BSD-3-Clause (see `LICENSE`)
+BSD-3-Clause (see `LICENSE`).

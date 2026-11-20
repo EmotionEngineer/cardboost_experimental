@@ -1,8 +1,11 @@
 """GOLDEN FULL PROTOCOL (slow): all 16 canonical folds vs golden/canonical_r87.json.
 
 This is the acceptance suite of cardboost 1.0: it re-runs the exact R87
-protocol (card_v8_base, r87_4 arm=off) and requires every fold to reproduce
-the certified metrics, wallet sizes and decode invariants.
+protocol in the champion mode (`card_v8_base` = R109 phase arm: p_phase_law +
+COMPRESS_UCUTS) and requires every fold to reproduce the certified metrics,
+wallet sizes and decode invariants.  The H3 control family (3591 B, anneal
+~0.02814) lives under `golden["h3_folds"]` and is anchored by
+test_golden_anchors.py with preset="v7_h3".
 
 Bit-exact acceptance runs on **Linux x86-64** (the canonical platform).
 On Apple Silicon: california/aps rows are checked bit-exact for v31 with a
@@ -37,6 +40,7 @@ def _tag(panel, fold):
     return f"{short.get(panel, panel)}_f{fold}"
 
 
+@pytest.mark.timeout(10800)
 @pytest.mark.parametrize("panel,fold", FOLD_CASES,
                          ids=[_tag(p, f) for p, f in FOLD_CASES])
 def test_fold_matches_canonical(panel, fold, panels, golden):
@@ -46,6 +50,7 @@ def test_fold_matches_canonical(panel, fold, panels, golden):
     check_fold(res, golden["folds"][_tag(panel, fold)], _tag(panel, fold))
 
 
+@pytest.mark.timeout(28800)
 def test_deploy_protocol_aps_toof(panels, golden):
     """The R87 headline: aps Toof deploy mean == 0.03298 (3-fold protocol)."""
     means = []

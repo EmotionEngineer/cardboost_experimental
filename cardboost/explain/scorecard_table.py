@@ -19,6 +19,7 @@ def scorecard_df(model, X: Optional[np.ndarray] = None,
     card = getattr(model, "dec_card_", None) or getattr(model, "card_", None)
     names = getattr(model, "feature_names_", None)
     factor = pdo / np.log(2.0)
+    from ..core.binning import round_scores
     rows = []
     for j, cuts in enumerate(card.cuts):
         V = np.asarray(card.V[j], float)
@@ -42,8 +43,10 @@ def scorecard_df(model, X: Optional[np.ndarray] = None,
                         f"(.., {edges[bi + 1]:.6g}]" if bi == 0 else
                         f"({edges[bi]:.6g}, ..)" if bi == m - 2 else
                         f"({edges[bi]:.6g}, {edges[bi + 1]:.6g}]")
-            row = dict(feature=nm, bin=bi, interval=interval, level=lvl,
-                       points=base_points - factor * lvl)
+            row = dict(feature=nm, bin=bi, interval=interval,
+                       level=float(round_scores(np.asarray([lvl]))[0]),
+                       points=float(round_scores(
+                           np.asarray([base_points - factor * lvl]))[0]))
             if X is not None and y is not None:
                 row["count"] = int(cnt[bi])
                 row["mass"] = float(cnt[bi] / max(len(X), 1))

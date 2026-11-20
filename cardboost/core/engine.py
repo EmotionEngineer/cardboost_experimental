@@ -48,14 +48,14 @@ def apply_config(panel: str, cfg: PresetConfig) -> None:
                  lr=cfg.lr, km=cfg.km, warm_lr=1.0, gram_lr=False,
                  base_passes=None, base_conv_tol=None,
                  solver=cfg.solver, nom_perm=nom_perm,
-                 p_active_law=False, p_phase_law=False)
+                 p_active_law=False, p_phase_law=cfg.p_phase_law)
     if cfg.potts_objective in ("exact_dev", "qfix_dev"):
         M6.EXACT_DEV["on"] = True
         M6.EXACT_DEV["cap"] = True
     else:
         M6.EXACT_DEV["on"] = False
         M6.EXACT_DEV["cap"] = False
-    C.COMPRESS_UCUTS = False
+    C.COMPRESS_UCUTS = cfg.compress_ucuts   # R109 Formula 2 (phase arm only)
     if cfg.extra.get("kappa_zero"):
         U.R84_COST["km_zero"] = True
 
