@@ -37,15 +37,22 @@ import r84_1_currency as C1        # noqa: E402
 
 # ----------------------------------------------------------------- config
 def apply_config(panel: str, cfg: PresetConfig) -> None:
-    """Frozen `_cfg` block of the R87 pipeline (+ preset overrides)."""
+    """Frozen `_cfg` block of the R87 pipeline (+ preset overrides).
+
+    Every mutable engine global is set deterministically on each call so
+    presets cannot leak into one another (the D1 class of bug).
+    """
     nom_perm = cfg.nom_perm if cfg.nom_perm is not None else (not panel.startswith("california"))
     R.P1_SHRINK_POST = False
-    R.P1_BINS = 8
+    R.P1_BINS = int(cfg.extra.get("p1_bins_k", 8))   # R98 S_jx32 grids (iid_max)
     R.HANDLE_A = False
     R.QGATE = None
     R.R84_FIT_RANK = False
+    # R71/R73 card_kappa0 (unregularized_32): l0 merge price -> 0
+    # (r77_stage: kappa_mult = law_use if km == "formula" else float(km)).
+    km_eff = 0.0 if cfg.extra.get("kappa_zero") else cfg.km
     T.set_fitcfg(m=cfg.max_bins, kappa_sched=None, warm_passes=cfg.warm_passes,
-                 lr=cfg.lr, km=cfg.km, warm_lr=1.0, gram_lr=False,
+                 lr=cfg.lr, km=km_eff, warm_lr=1.0, gram_lr=False,
                  base_passes=None, base_conv_tol=None,
                  solver=cfg.solver, nom_perm=nom_perm,
                  p_active_law=False, p_phase_law=cfg.p_phase_law)
@@ -56,8 +63,9 @@ def apply_config(panel: str, cfg: PresetConfig) -> None:
         M6.EXACT_DEV["on"] = False
         M6.EXACT_DEV["cap"] = False
     C.COMPRESS_UCUTS = cfg.compress_ucuts   # R109 Formula 2 (phase arm only)
-    if cfg.extra.get("kappa_zero"):
-        U.R84_COST["km_zero"] = True
+    # R97 H1H2 hard segment-mass floor: any truthy value enables
+    # h_min = max(25, 0.05 * bin_mass) in the potts DP (r71_universal).
+    U.R84_COST["hmin"] = float(cfg.hmin_frac or 0.0)
 
 
 def _run_kwargs(panel: str, cfg: PresetConfig) -> dict:
@@ -66,7 +74,7 @@ def _run_kwargs(panel: str, cfg: PresetConfig) -> dict:
         kw = dict(K_pairs=20 if cfg.K_pairs is None else cfg.K_pairs,
                   K_refresh=cfg.K_refresh, max_admit=cfg.max_admit,
                   star_types=tuple(cfg.star_types), frag_mode=cfg.frag_mode,
-                  screen_mode="s12_pure")
+                  screen_mode="s12_pure", oof_merge=cfg.oof_merge)
     else:
         if cfg.enable_pairs:
             default_stars = ("g4a", "g4b", "g4c", "g4d", "p1", "m2")
@@ -78,7 +86,8 @@ def _run_kwargs(panel: str, cfg: PresetConfig) -> dict:
         kw = dict(K_pairs=0 if cfg.K_pairs is None else cfg.K_pairs,
                   K_refresh=cfg.K_refresh, max_admit=cfg.max_admit,
                   star_types=stars,
-                  pool_mode="active", screen_mode="legacy", oof_merge=False)
+                  pool_mode="active", screen_mode="legacy",
+                  oof_merge=cfg.oof_merge)
     return kw
 
 
@@ -196,6 +205,38 @@ def fit_fold(panel: str, fold: int, data: dict,
                 if admit:
                     card.atoms.append(at)
 
+        # ---- optional post-fit layers (presets, canary protocols) --------
+        if cfg.include_safe_tier:
+            # R113 safe_value_tier (r87_5 canary protocol): Dykstra-centred
+            # atom-owned-marginal safe tier over the base card.
+            import r87_safetier as ST
+            tier_atoms, m0 = ST.build_safe_tier(card, Xtr, ytr, kind,
+                                                n_classes,
+                                                cache=os.path.join(save_dir,
+                                                                   "tier"))
+            card.atoms.extend(tier_atoms)
+            mech["safe_tier"] = m0
+        if cfg.ledger_mode == "beam3":
+            # R114 beam3 prequential ledger (r87_6 canary protocol).
+            import r87_beam3 as B3
+            finalists, m0 = B3.beam_search(card, Xtr, ytr, kind, n_classes,
+                                           cache=os.path.join(save_dir,
+                                                              "beam"))
+            win = []
+            if finalists:
+                fin = B3.final_select(finalists, Xtr, ytr, kind, n_classes,
+                                      K=max(m0.get("cand", 1), 1),
+                                      cache=os.path.join(save_dir, "beam"))
+                m0["final"] = fin
+                if fin and fin[0]["score"] > 0:
+                    win = [tuple(p) for p in fin[0]["pairs"]]
+            if win:
+                card = B3.deploy_with_set(card, admitted, Xtr, ytr, kind,
+                                          n_classes, win)
+            m0["win"] = [list(w) for w in win]
+            m0["admitted"] = bool(win)
+            mech["beam3"] = m0
+
         # ---- IsoLink + calibration specs (canonical block) ---------------
         iso_meta = dict(admitted=False, gain=0.0)
         iso = None
@@ -206,7 +247,7 @@ def fit_fold(panel: str, fold: int, data: dict,
             iso_meta = dict(admitted=bool(adm), gain=round(float(gain), 2))
             card.isolink = iso
         Tcal, spec14 = W.fit_calib_spec(admitted, kind, n_classes, Xtr, ytr,
-                                        oof_merge=False)
+                                        oof_merge=cfg.oof_merge)
 
         budget = cfg.max_wallet_bytes or cfg.wallet_bytes
         payload, info = C.emit_v31(card, Xtr)
@@ -311,6 +352,33 @@ def fit_deploy(data: dict, preset: str = "v8", overrides: Optional[dict] = None,
                             admitted=admit)
                 if admit:
                     card.atoms.append(at)
+        # ---- optional post-fit layers (presets, canary protocols) --------
+        if cfg.include_safe_tier:
+            import r87_safetier as ST
+            tier_atoms, m0 = ST.build_safe_tier(card, X, y, kind, n_classes,
+                                                cache=os.path.join(save_dir,
+                                                                   "tier"))
+            card.atoms.extend(tier_atoms)
+            mech["safe_tier"] = m0
+        if cfg.ledger_mode == "beam3":
+            import r87_beam3 as B3
+            finalists, m0 = B3.beam_search(card, X, y, kind, n_classes,
+                                           cache=os.path.join(save_dir,
+                                                              "beam"))
+            win = []
+            if finalists:
+                fin = B3.final_select(finalists, X, y, kind, n_classes,
+                                      K=max(m0.get("cand", 1), 1),
+                                      cache=os.path.join(save_dir, "beam"))
+                m0["final"] = fin
+                if fin and fin[0]["score"] > 0:
+                    win = [tuple(p) for p in fin[0]["pairs"]]
+            if win:
+                card = B3.deploy_with_set(card, admitted, X, y, kind,
+                                          n_classes, win)
+            m0["win"] = [list(w) for w in win]
+            m0["admitted"] = bool(win)
+            mech["beam3"] = m0
         if kind == "regression":
             eta_tr = np.asarray(card.score(X), float)
             sigma2 = float(np.mean((y - eta_tr) ** 2))

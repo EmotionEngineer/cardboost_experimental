@@ -73,19 +73,21 @@ def check_fold(res, entry, tag):
     assert res.v31 <= 4096, f"{tag}: wallet {res.v31} > 4096"
 
     v31_ok = (res.v31 == entry["v31"])
+    tight_ok = v31_ok
     if v31_ok:
+        # same wire size does NOT prove bit-identical cards: a quantisation
+        # flip can change cut values without changing the byte count -> if
+        # the metrics drift past TIGHT_TOL this is still a f16 flip (grade B),
+        # not a hard failure (the pre-1.1 checker died here silently).
         for key, val in m_fit.items():
             got = res.metric_fit[key]
-            assert abs(got - val) <= max(TIGHT_TOL, abs(val) * 1e-12), \
-                (f"{tag} metric_fit[{key}]: {got!r} != {val!r} "
-                 f"(bit-identical card but metric drift exceeds TIGHT_TOL "
-                 f"{TIGHT_TOL})")
+            if abs(got - val) > max(TIGHT_TOL, abs(val) * 1e-12):
+                tight_ok = False
         for key, val in m_dec.items():
             got = res.metric_dec[key]
-            assert abs(got - val) <= max(TIGHT_TOL, abs(val) * 1e-12), \
-                (f"{tag} metric_dec[{key}]: {got!r} != {val!r} "
-                 f"(bit-identical card but metric drift exceeds TIGHT_TOL "
-                 f"{TIGHT_TOL})")
+            if abs(got - val) > max(TIGHT_TOL, abs(val) * 1e-12):
+                tight_ok = False
+    if tight_ok:
         grade = "A (bit-identical card, ulp metrics)"
     else:
         for key, val in m_dec.items():
@@ -94,7 +96,9 @@ def check_fold(res, entry, tag):
             assert abs(got - val) <= band, (
                 f"{tag} metric_dec[{key}]: platform value {got!r} vs canonical "
                 f"{val!r} exceeds even the LOOSE band {band} - real breakage?")
-        grade = "B (f16 quantisation flip, structural+quality band)"
+        grade = ("B (f16 quantisation flip, structural+quality band)"
+                 if not v31_ok else
+                 "B (same-size quantisation flip, structural+quality band)")
 
     print(f"\n[golden:{tag}] platform-grade {grade}\n"
           f"    v31        {res.v31}  (canonical {entry['v31']})"

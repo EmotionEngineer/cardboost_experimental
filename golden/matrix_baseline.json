@@ -1,0 +1,1478 @@
+{
+ "note": "auto-recorded by tests/test_full_matrix.py; freeze only after review",
+ "python": "3.9.6",
+ "recorded_on": "macOS-15.3.1-arm64-arm-64bit",
+ "rows": {
+  "deploy::iid_max::anneal": {
+   "kind": "multiclass",
+   "maxdiff": 0.0,
+   "moved_train": 0,
+   "v31": 1390
+  },
+  "deploy::ood_fortress::anneal": {
+   "kind": "multiclass",
+   "maxdiff": 0.0,
+   "moved_train": 0,
+   "v31": 837
+  },
+  "deploy::scorecard_1d::anneal": {
+   "kind": "multiclass",
+   "maxdiff": 0.0,
+   "moved_train": 0,
+   "v31": 1345
+  },
+  "deploy::sensor_rare::anneal": {
+   "kind": "multiclass",
+   "maxdiff": 0.0,
+   "moved_train": 0,
+   "v31": 1345
+  },
+  "deploy::unregularized_32::anneal": {
+   "kind": "multiclass",
+   "maxdiff": 0.0,
+   "moved_train": 0,
+   "v31": 2263
+  },
+  "deploy::v7_h3::anneal": {
+   "kind": "multiclass",
+   "maxdiff": 0.0,
+   "moved_train": 0,
+   "v31": 1487
+  },
+  "deploy::v8::anneal": {
+   "kind": "multiclass",
+   "maxdiff": 0.0,
+   "moved_train": 0,
+   "v31": 1390
+  },
+  "iid_max::anneal_f0": {
+   "dec": {
+    "14b": 0.015230503706572052,
+    "Toof": 0.01591873044713608
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.015188985575617335,
+    "Toof": 0.01590757990678624
+   },
+   "quant_gap": 0.017550789986674253,
+   "v31": 1293
+  },
+  "iid_max::anneal_f1": {
+   "dec": {
+    "14b": 0.018688222251170786,
+    "Toof": 0.02118032417101994
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.018641957054897417,
+    "Toof": 0.021047942134297323
+   },
+   "quant_gap": 0.022197305989339,
+   "v31": 1296
+  },
+  "iid_max::anneal_f2": {
+   "dec": {
+    "14b": 0.04240801869963445,
+    "Toof": 0.05755244548052132
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.042475542262262085,
+    "Toof": 0.057782156883341
+   },
+   "quant_gap": 0.03094333802639393,
+   "v31": 1172
+  },
+  "iid_max::aps_f0": {
+   "dec": {
+    "14b": 0.03247190850480615,
+    "Toof": 0.03245986920090248
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.03247456798315009,
+    "Toof": 0.03246241347621945
+   },
+   "quant_gap": 0.024875148547591763,
+   "v31": 2631
+  },
+  "iid_max::aps_f1": {
+   "dec": {
+    "14b": 0.034476512245135406,
+    "Toof": 0.03442164921482841
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.034503811330214545,
+    "Toof": 0.03444367106412958
+   },
+   "quant_gap": 0.8050530526728075,
+   "v31": 2916
+  },
+  "iid_max::aps_f2": {
+   "dec": {
+    "14b": 0.03206383777660417,
+    "Toof": 0.032049395997753534
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.03204952124550533,
+    "Toof": 0.0320348890180864
+   },
+   "quant_gap": 0.6125526323030037,
+   "v31": 2843
+  },
+  "iid_max::cal_rand_f0": {
+   "dec": {
+    "R2": 0.8014774686747241
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8013910348220347
+   },
+   "quant_gap": 0.815146531205861,
+   "v31": 6859
+  },
+  "iid_max::cal_rand_f1": {
+   "dec": {
+    "R2": 0.8073318435930681
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8107994578067426
+   },
+   "quant_gap": 0.5978875408142266,
+   "v31": 6544
+  },
+  "iid_max::cal_rand_f2": {
+   "dec": {
+    "R2": 0.8003397269333876
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8019820265834863
+   },
+   "quant_gap": 0.6284971998983244,
+   "v31": 6498
+  },
+  "iid_max::cal_rand_f3": {
+   "dec": {
+    "R2": 0.8212808471714572
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8234595494160234
+   },
+   "quant_gap": 0.8470120450940342,
+   "v31": 6966
+  },
+  "iid_max::cal_rand_f4": {
+   "dec": {
+    "R2": 0.798155191710233
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.7987314476954906
+   },
+   "quant_gap": 0.7346533861435627,
+   "v31": 6746
+  },
+  "iid_max::cal_spat_f0": {
+   "dec": {
+    "R2": 0.5330492317229536
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.5353582553507736
+   },
+   "quant_gap": 0.375595976730549,
+   "v31": 6522
+  },
+  "iid_max::cal_spat_f1": {
+   "dec": {
+    "R2": 0.642662858260918
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.646703193255682
+   },
+   "quant_gap": 0.37728513274636466,
+   "v31": 6786
+  },
+  "iid_max::cal_spat_f2": {
+   "dec": {
+    "R2": 0.5844689568046736
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.6019733402652392
+   },
+   "quant_gap": 1.2500735621414782,
+   "v31": 6870
+  },
+  "iid_max::cal_spat_f3": {
+   "dec": {
+    "R2": 0.7411709380013957
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.7465589610002632
+   },
+   "quant_gap": 0.3758262137428181,
+   "v31": 6792
+  },
+  "iid_max::cal_spat_f4": {
+   "dec": {
+    "R2": -0.023255701925860794
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": -0.02196284571044571
+   },
+   "quant_gap": 0.5317838530339065,
+   "v31": 7028
+  },
+  "ood_fortress::anneal_f0": {
+   "dec": {
+    "14b": 0.39413625030697935,
+    "Toof": 0.38529220948630444
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.39398727027248737,
+    "Toof": 0.385160131010057
+   },
+   "quant_gap": 0.012031565942671296,
+   "v31": 878
+  },
+  "ood_fortress::anneal_f1": {
+   "dec": {
+    "14b": 0.18037537563494074,
+    "Toof": 0.19587169324711334
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.18032333666320985,
+    "Toof": 0.19574869523286043
+   },
+   "quant_gap": 0.0073245890055855245,
+   "v31": 964
+  },
+  "ood_fortress::anneal_f2": {
+   "dec": {
+    "14b": 0.16065950933533144,
+    "Toof": 0.18410194886494052
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.16060009579040105,
+    "Toof": 0.18397906304279488
+   },
+   "quant_gap": 0.009816510241340115,
+   "v31": 938
+  },
+  "ood_fortress::aps_f0": {
+   "dec": {
+    "14b": 0.05049794691405037,
+    "Toof": 0.050494427386267235
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.050512415495310874,
+    "Toof": 0.05051354119322164
+   },
+   "quant_gap": 0.013399951478025418,
+   "v31": 1221
+  },
+  "ood_fortress::aps_f1": {
+   "dec": {
+    "14b": 0.047449722008541514,
+    "Toof": 0.04758559116724427
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.04745484002906371,
+    "Toof": 0.04758855605469394
+   },
+   "quant_gap": 0.017111691733084022,
+   "v31": 1276
+  },
+  "ood_fortress::aps_f2": {
+   "dec": {
+    "14b": 0.050069767531193125,
+    "Toof": 0.05020987650880972
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.050101472112845276,
+    "Toof": 0.05025187008865972
+   },
+   "quant_gap": 0.02920363726388686,
+   "v31": 1132
+  },
+  "ood_fortress::cal_rand_f0": {
+   "dec": {
+    "R2": 0.7838779959173351
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.7808934961124689
+   },
+   "quant_gap": 0.8368847957517382,
+   "v31": 1756
+  },
+  "ood_fortress::cal_rand_f1": {
+   "dec": {
+    "R2": 0.7921644929221902
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.7916356822600749
+   },
+   "quant_gap": 0.6586414530294331,
+   "v31": 2301
+  },
+  "ood_fortress::cal_rand_f2": {
+   "dec": {
+    "R2": 0.7822479143028729
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.7823670505514552
+   },
+   "quant_gap": 0.6488930845937002,
+   "v31": 2924
+  },
+  "ood_fortress::cal_rand_f3": {
+   "dec": {
+    "R2": 0.8066166232426591
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.806664059895746
+   },
+   "quant_gap": 0.9302937877674577,
+   "v31": 2712
+  },
+  "ood_fortress::cal_rand_f4": {
+   "dec": {
+    "R2": 0.7784579528841272
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.7789119852884931
+   },
+   "quant_gap": 0.6089872890216106,
+   "v31": 2816
+  },
+  "ood_fortress::cal_spat_f0": {
+   "dec": {
+    "R2": 0.49500414749827015
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.4960863086975126
+   },
+   "quant_gap": 0.2384010233872793,
+   "v31": 2254
+  },
+  "ood_fortress::cal_spat_f1": {
+   "dec": {
+    "R2": 0.6463646540059187
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.6454235221709668
+   },
+   "quant_gap": 0.44994538296636244,
+   "v31": 2404
+  },
+  "ood_fortress::cal_spat_f2": {
+   "dec": {
+    "R2": 0.5207091241077417
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.5202152931908332
+   },
+   "quant_gap": 0.43782177719330306,
+   "v31": 2662
+  },
+  "ood_fortress::cal_spat_f3": {
+   "dec": {
+    "R2": 0.7248308827241365
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.7359017762070261
+   },
+   "quant_gap": 0.4629696822603022,
+   "v31": 2279
+  },
+  "ood_fortress::cal_spat_f4": {
+   "dec": {
+    "R2": 0.033165009984962746
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.031937167820003776
+   },
+   "quant_gap": 0.5762693741491476,
+   "v31": 1734
+  },
+  "scorecard_1d::anneal_f0": {
+   "dec": {
+    "14b": 0.013198926090283997,
+    "Toof": 0.014684862545802223
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.013128598966546506,
+    "Toof": 0.014645057189053977
+   },
+   "quant_gap": 0.015505950439594018,
+   "v31": 1175
+  },
+  "scorecard_1d::anneal_f1": {
+   "dec": {
+    "14b": 0.018074104749613087,
+    "Toof": 0.021359066328323382
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.018017394472523294,
+    "Toof": 0.02127619625183217
+   },
+   "quant_gap": 0.023425333232174772,
+   "v31": 1229
+  },
+  "scorecard_1d::anneal_f2": {
+   "dec": {
+    "14b": 0.04205483942622646,
+    "Toof": 0.05905426579676152
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.04210859187824133,
+    "Toof": 0.05913895770296
+   },
+   "quant_gap": 0.017098756689471806,
+   "v31": 1117
+  },
+  "scorecard_1d::aps_f0": {
+   "dec": {
+    "14b": 0.03303770723862863,
+    "Toof": 0.033036151946742934
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.03303982694055562,
+    "Toof": 0.033037841436523246
+   },
+   "quant_gap": 0.024798536458748188,
+   "v31": 2125
+  },
+  "scorecard_1d::aps_f1": {
+   "dec": {
+    "14b": 0.03439497631080867,
+    "Toof": 0.03434466432255487
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.034423619217648596,
+    "Toof": 0.03436912766850484
+   },
+   "quant_gap": 0.8054541079047439,
+   "v31": 2277
+  },
+  "scorecard_1d::aps_f2": {
+   "dec": {
+    "14b": 0.03186692633104902,
+    "Toof": 0.03183316656370924
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.03185627421595915,
+    "Toof": 0.03182217430513332
+   },
+   "quant_gap": 0.6107631402566689,
+   "v31": 2320
+  },
+  "scorecard_1d::cal_rand_f0": {
+   "dec": {
+    "R2": 0.7991785981693916
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8004754327779836
+   },
+   "quant_gap": 0.7574937023041985,
+   "v31": 2534
+  },
+  "scorecard_1d::cal_rand_f1": {
+   "dec": {
+    "R2": 0.8091862893556279
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8123568746852035
+   },
+   "quant_gap": 0.5804647578687645,
+   "v31": 2221
+  },
+  "scorecard_1d::cal_rand_f2": {
+   "dec": {
+    "R2": 0.8001797108276264
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8010815344940537
+   },
+   "quant_gap": 0.6214502478621187,
+   "v31": 2329
+  },
+  "scorecard_1d::cal_rand_f3": {
+   "dec": {
+    "R2": 0.8219104419060491
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8240919938856058
+   },
+   "quant_gap": 0.8124400331998483,
+   "v31": 2393
+  },
+  "scorecard_1d::cal_rand_f4": {
+   "dec": {
+    "R2": 0.7995147927451268
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.7999879982323932
+   },
+   "quant_gap": 0.6847251986422065,
+   "v31": 2314
+  },
+  "scorecard_1d::cal_spat_f0": {
+   "dec": {
+    "R2": 0.5434451715620687
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.5472115190395359
+   },
+   "quant_gap": 0.27143281326015023,
+   "v31": 2379
+  },
+  "scorecard_1d::cal_spat_f1": {
+   "dec": {
+    "R2": 0.6519510930045962
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.6546965417106188
+   },
+   "quant_gap": 0.3730659193506507,
+   "v31": 2315
+  },
+  "scorecard_1d::cal_spat_f2": {
+   "dec": {
+    "R2": 0.5063399769056556
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.5310094118792187
+   },
+   "quant_gap": 1.240859555900025,
+   "v31": 2342
+  },
+  "scorecard_1d::cal_spat_f3": {
+   "dec": {
+    "R2": 0.7365775896892017
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.7464145977840009
+   },
+   "quant_gap": 0.39902984058276614,
+   "v31": 2363
+  },
+  "scorecard_1d::cal_spat_f4": {
+   "dec": {
+    "R2": -0.03658710775131602
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": -0.032901170823680825
+   },
+   "quant_gap": 0.5235908947502317,
+   "v31": 2225
+  },
+  "sensor_rare::anneal_f0": {
+   "dec": {
+    "14b": 0.013198926090283997,
+    "Toof": 0.014684862545802223
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.013128598966546506,
+    "Toof": 0.014645057189053977
+   },
+   "quant_gap": 0.015505950439594018,
+   "v31": 1175
+  },
+  "sensor_rare::anneal_f1": {
+   "dec": {
+    "14b": 0.018074104749613087,
+    "Toof": 0.021359066328323382
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.018017394472523294,
+    "Toof": 0.02127619625183217
+   },
+   "quant_gap": 0.023425333232174772,
+   "v31": 1229
+  },
+  "sensor_rare::anneal_f2": {
+   "dec": {
+    "14b": 0.04205483942622646,
+    "Toof": 0.05905426579676152
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.04210859187824133,
+    "Toof": 0.05913895770296
+   },
+   "quant_gap": 0.017098756689471806,
+   "v31": 1117
+  },
+  "sensor_rare::aps_f0": {
+   "dec": {
+    "14b": 0.03430408695060518,
+    "Toof": 0.03427202823219415
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.0343208912410484,
+    "Toof": 0.03428806040861926
+   },
+   "quant_gap": 0.32575174717756994,
+   "v31": 1983
+  },
+  "sensor_rare::aps_f1": {
+   "dec": {
+    "14b": 0.03689668874384134,
+    "Toof": 0.036956065371314864
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.03689939364990269,
+    "Toof": 0.03696202802573609
+   },
+   "quant_gap": 0.02536775479028286,
+   "v31": 2154
+  },
+  "sensor_rare::aps_f2": {
+   "dec": {
+    "14b": 0.030535765359135162,
+    "Toof": 0.030550525630294822
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.03053102309645897,
+    "Toof": 0.030545679580845607
+   },
+   "quant_gap": 0.32094096469209177,
+   "v31": 2141
+  },
+  "sensor_rare::cal_rand_f0": {
+   "dec": {
+    "R2": 0.7991785981693916
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8004754327779836
+   },
+   "quant_gap": 0.7574937023041985,
+   "v31": 2534
+  },
+  "sensor_rare::cal_rand_f1": {
+   "dec": {
+    "R2": 0.8091862893556279
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8123568746852035
+   },
+   "quant_gap": 0.5804647578687645,
+   "v31": 2221
+  },
+  "sensor_rare::cal_rand_f2": {
+   "dec": {
+    "R2": 0.7998188064000383
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8015329644934047
+   },
+   "quant_gap": 0.6342554918910559,
+   "v31": 2745
+  },
+  "sensor_rare::cal_rand_f3": {
+   "dec": {
+    "R2": 0.8223802409065332
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8245125953419035
+   },
+   "quant_gap": 0.7569572851834718,
+   "v31": 2832
+  },
+  "sensor_rare::cal_rand_f4": {
+   "dec": {
+    "R2": 0.7963361455252755
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.7969215351374819
+   },
+   "quant_gap": 0.7489862512566567,
+   "v31": 2607
+  },
+  "sensor_rare::cal_spat_f0": {
+   "dec": {
+    "R2": 0.5434451715620687
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.5472115190395359
+   },
+   "quant_gap": 0.27143281326015023,
+   "v31": 2379
+  },
+  "sensor_rare::cal_spat_f1": {
+   "dec": {
+    "R2": 0.6394139733941422
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.6403926545579548
+   },
+   "quant_gap": 0.36531162850377985,
+   "v31": 2689
+  },
+  "sensor_rare::cal_spat_f2": {
+   "dec": {
+    "R2": 0.5389185167420397
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.5636618674835763
+   },
+   "quant_gap": 1.03416797619386,
+   "v31": 2804
+  },
+  "sensor_rare::cal_spat_f3": {
+   "dec": {
+    "R2": 0.733378272314068
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.7448786941595351
+   },
+   "quant_gap": 0.3657669528478018,
+   "v31": 3058
+  },
+  "sensor_rare::cal_spat_f4": {
+   "dec": {
+    "R2": -0.05770606812537027
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": -0.06041584763317864
+   },
+   "quant_gap": 0.5504580352480559,
+   "v31": 2889
+  },
+  "unregularized_32::anneal_f0": {
+   "dec": {
+    "14b": 0.012549654983785907,
+    "Toof": 0.013586112807187885
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.012483185499454836,
+    "Toof": 0.013523588392491733
+   },
+   "quant_gap": 0.025760474956119772,
+   "v31": 2199
+  },
+  "unregularized_32::anneal_f1": {
+   "dec": {
+    "14b": 0.017891183544140807,
+    "Toof": 0.021641426729925736
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.01790155945622678,
+    "Toof": 0.021646317901551495
+   },
+   "quant_gap": 0.021725221885863455,
+   "v31": 2255
+  },
+  "unregularized_32::anneal_f2": {
+   "dec": {
+    "14b": 0.05548880936830659,
+    "Toof": 0.06700865732827122
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.055412641603674526,
+    "Toof": 0.0669237501475568
+   },
+   "quant_gap": 0.019751214868733824,
+   "v31": 2175
+  },
+  "unregularized_32::aps_f0": {
+   "dec": {
+    "14b": 0.03150819256878374,
+    "Toof": 0.031640312238268305
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.0315116028905442,
+    "Toof": 0.03164598387987994
+   },
+   "quant_gap": 0.1264136605908135,
+   "v31": 15798
+  },
+  "unregularized_32::aps_f1": {
+   "dec": {
+    "14b": 0.036548938537999724,
+    "Toof": 0.03678200431214245
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.03652339367346393,
+    "Toof": 0.03675408720640679
+   },
+   "quant_gap": 0.08507038856180671,
+   "v31": 15790
+  },
+  "unregularized_32::aps_f2": {
+   "dec": {
+    "14b": 0.031879026358371,
+    "Toof": 0.03206100831341256
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.031868586875155945,
+    "Toof": 0.032048994438676044
+   },
+   "quant_gap": 0.16132875128807633,
+   "v31": 15978
+  },
+  "unregularized_32::cal_rand_f0": {
+   "dec": {
+    "R2": 0.8011414504341577
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8024403206402435
+   },
+   "quant_gap": 0.7889865788243791,
+   "v31": 2568
+  },
+  "unregularized_32::cal_rand_f1": {
+   "dec": {
+    "R2": 0.8100131608769986
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8130753854759571
+   },
+   "quant_gap": 0.5400358328070309,
+   "v31": 2928
+  },
+  "unregularized_32::cal_rand_f2": {
+   "dec": {
+    "R2": 0.799556385387329
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8014858097638786
+   },
+   "quant_gap": 0.6459675422673339,
+   "v31": 2826
+  },
+  "unregularized_32::cal_rand_f3": {
+   "dec": {
+    "R2": 0.8237186660487043
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.825868559550084
+   },
+   "quant_gap": 0.881414868771984,
+   "v31": 3096
+  },
+  "unregularized_32::cal_rand_f4": {
+   "dec": {
+    "R2": 0.7947248021119613
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.7952387836466396
+   },
+   "quant_gap": 0.7266849051430948,
+   "v31": 2651
+  },
+  "unregularized_32::cal_spat_f0": {
+   "dec": {
+    "R2": 0.5114975885574021
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.5112928016663398
+   },
+   "quant_gap": 0.26324312520429416,
+   "v31": 2211
+  },
+  "unregularized_32::cal_spat_f1": {
+   "dec": {
+    "R2": 0.6568237913642871
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.6582056952024334
+   },
+   "quant_gap": 0.4684441793275891,
+   "v31": 3112
+  },
+  "unregularized_32::cal_spat_f2": {
+   "dec": {
+    "R2": 0.5185976120489197
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.5455352861737959
+   },
+   "quant_gap": 0.8292872137105309,
+   "v31": 3630
+  },
+  "unregularized_32::cal_spat_f3": {
+   "dec": {
+    "R2": 0.7339703909819053
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.7427742497638066
+   },
+   "quant_gap": 0.34894312815476836,
+   "v31": 3174
+  },
+  "unregularized_32::cal_spat_f4": {
+   "dec": {
+    "R2": 0.030200651509155962
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.02993680102534102
+   },
+   "quant_gap": 0.6095394207442357,
+   "v31": 3061
+  },
+  "v7_h3::anneal_f0": {
+   "dec": {
+    "14b": 0.01489084102351376,
+    "Toof": 0.01335304435009843
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.014828711714744435,
+    "Toof": 0.01334540221765371
+   },
+   "quant_gap": 0.017453769978744926,
+   "v31": 1406
+  },
+  "v7_h3::anneal_f1": {
+   "dec": {
+    "14b": 0.01935593238312842,
+    "Toof": 0.02135363492852525
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.019321772806226507,
+    "Toof": 0.021367058225140647
+   },
+   "quant_gap": 0.01620829260918466,
+   "v31": 1447
+  },
+  "v7_h3::anneal_f2": {
+   "dec": {
+    "14b": 0.04768204778991516,
+    "Toof": 0.061621664560764844
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.04764154931333248,
+    "Toof": 0.06146929265376011
+   },
+   "quant_gap": 0.022684900209763992,
+   "v31": 1315
+  },
+  "v7_h3::aps_f0": {
+   "dec": {
+    "14b": 0.03247190850480615,
+    "Toof": 0.03245986920090248
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.03247456798315009,
+    "Toof": 0.03246241347621945
+   },
+   "quant_gap": 0.024875148547591763,
+   "v31": 2631
+  },
+  "v7_h3::aps_f1": {
+   "dec": {
+    "14b": 0.034476512245135406,
+    "Toof": 0.03442164921482841
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.034503811330214545,
+    "Toof": 0.03444367106412958
+   },
+   "quant_gap": 0.8050530526728075,
+   "v31": 2916
+  },
+  "v7_h3::aps_f2": {
+   "dec": {
+    "14b": 0.03206383777660417,
+    "Toof": 0.032049395997753534
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.03204952124550533,
+    "Toof": 0.0320348890180864
+   },
+   "quant_gap": 0.6125526323030037,
+   "v31": 2843
+  },
+  "v7_h3::cal_rand_f0": {
+   "dec": {
+    "R2": 0.7991800160444765
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8004754327779836
+   },
+   "quant_gap": 0.7575808367555519,
+   "v31": 3591
+  },
+  "v7_h3::cal_rand_f1": {
+   "dec": {
+    "R2": 0.8091864258946289
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8123568746852035
+   },
+   "quant_gap": 0.5802577260789124,
+   "v31": 2960
+  },
+  "v7_h3::cal_rand_f2": {
+   "dec": {
+    "R2": 0.7998188853112789
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8015329644934047
+   },
+   "quant_gap": 0.6342050147485567,
+   "v31": 3470
+  },
+  "v7_h3::cal_rand_f3": {
+   "dec": {
+    "R2": 0.8223794671472646
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8245125953419035
+   },
+   "quant_gap": 0.7567851202215752,
+   "v31": 3632
+  },
+  "v7_h3::cal_rand_f4": {
+   "dec": {
+    "R2": 0.7963360244591577
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.7969215351374819
+   },
+   "quant_gap": 0.7490586736240052,
+   "v31": 3373
+  },
+  "v7_h3::cal_spat_f0": {
+   "dec": {
+    "R2": 0.5434043393358166
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.5472115190395359
+   },
+   "quant_gap": 0.27153230333488976,
+   "v31": 3436
+  },
+  "v7_h3::cal_spat_f1": {
+   "dec": {
+    "R2": 0.6394136031295696
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.6403926545579548
+   },
+   "quant_gap": 0.3653100868432042,
+   "v31": 3559
+  },
+  "v7_h3::cal_spat_f2": {
+   "dec": {
+    "R2": 0.5389006480158873
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.5636618674835763
+   },
+   "quant_gap": 1.0342336337322489,
+   "v31": 3860
+  },
+  "v7_h3::cal_spat_f3": {
+   "dec": {
+    "R2": 0.7179004584899005
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.733036224378184
+   },
+   "quant_gap": 0.3585216859647442,
+   "v31": 4079
+  },
+  "v7_h3::cal_spat_f4": {
+   "dec": {
+    "R2": -0.058009008379776184
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": -0.06041584763317864
+   },
+   "quant_gap": 0.5507023039389254,
+   "v31": 3792
+  },
+  "v8::anneal_f0": {
+   "dec": {
+    "14b": 0.015230503706572052,
+    "Toof": 0.01591873044713608
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.015188985575617335,
+    "Toof": 0.01590757990678624
+   },
+   "quant_gap": 0.017550789986674253,
+   "v31": 1293
+  },
+  "v8::anneal_f1": {
+   "dec": {
+    "14b": 0.018688222251170786,
+    "Toof": 0.02118032417101994
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.018641957054897417,
+    "Toof": 0.021047942134297323
+   },
+   "quant_gap": 0.022197305989339,
+   "v31": 1296
+  },
+  "v8::anneal_f2": {
+   "dec": {
+    "14b": 0.04240801869963445,
+    "Toof": 0.05755244548052132
+   },
+   "exact": false,
+   "kind": "multiclass",
+   "metrics": {
+    "14b": 0.042475542262262085,
+    "Toof": 0.057782156883341
+   },
+   "quant_gap": 0.03094333802639393,
+   "v31": 1172
+  },
+  "v8::aps_f0": {
+   "dec": {
+    "14b": 0.03247190850480615,
+    "Toof": 0.03245986920090248
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.03247456798315009,
+    "Toof": 0.03246241347621945
+   },
+   "quant_gap": 0.024875148547591763,
+   "v31": 2631
+  },
+  "v8::aps_f1": {
+   "dec": {
+    "14b": 0.034476512245135406,
+    "Toof": 0.03442164921482841
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.034503811330214545,
+    "Toof": 0.03444367106412958
+   },
+   "quant_gap": 0.8050530526728075,
+   "v31": 2916
+  },
+  "v8::aps_f2": {
+   "dec": {
+    "14b": 0.03206383777660417,
+    "Toof": 0.032049395997753534
+   },
+   "exact": false,
+   "kind": "binary",
+   "metrics": {
+    "14b": 0.03204952124550533,
+    "Toof": 0.0320348890180864
+   },
+   "quant_gap": 0.6125526323030037,
+   "v31": 2843
+  },
+  "v8::cal_rand_f0": {
+   "dec": {
+    "R2": 0.7991800160444765
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8004754327779836
+   },
+   "quant_gap": 0.7575808367555519,
+   "v31": 2548
+  },
+  "v8::cal_rand_f1": {
+   "dec": {
+    "R2": 0.8091864258946289
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8123568746852035
+   },
+   "quant_gap": 0.5802577260789124,
+   "v31": 2233
+  },
+  "v8::cal_rand_f2": {
+   "dec": {
+    "R2": 0.7998188853112789
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8015329644934047
+   },
+   "quant_gap": 0.6342050147485567,
+   "v31": 2758
+  },
+  "v8::cal_rand_f3": {
+   "dec": {
+    "R2": 0.8223794671472646
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.8245125953419035
+   },
+   "quant_gap": 0.7567851202215752,
+   "v31": 2843
+  },
+  "v8::cal_rand_f4": {
+   "dec": {
+    "R2": 0.7963360244591577
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.7969215351374819
+   },
+   "quant_gap": 0.7490586736240052,
+   "v31": 2621
+  },
+  "v8::cal_spat_f0": {
+   "dec": {
+    "R2": 0.5434043393358166
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.5472115190395359
+   },
+   "quant_gap": 0.27153230333488976,
+   "v31": 2394
+  },
+  "v8::cal_spat_f1": {
+   "dec": {
+    "R2": 0.6394136031295696
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.6403926545579548
+   },
+   "quant_gap": 0.3653100868432042,
+   "v31": 2702
+  },
+  "v8::cal_spat_f2": {
+   "dec": {
+    "R2": 0.5389006480158873
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.5636618674835763
+   },
+   "quant_gap": 1.0342336337322489,
+   "v31": 2818
+  },
+  "v8::cal_spat_f3": {
+   "dec": {
+    "R2": 0.7333822297674049
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": 0.7448786941595351
+   },
+   "quant_gap": 0.3657360262780971,
+   "v31": 3074
+  },
+  "v8::cal_spat_f4": {
+   "dec": {
+    "R2": -0.058009008379776184
+   },
+   "exact": false,
+   "kind": "regression",
+   "metrics": {
+    "R2": -0.06041584763317864
+   },
+   "quant_gap": 0.5507023039389254,
+   "v31": 2904
+  }
+ },
+ "schema": "matrix_baseline_v1"
+}

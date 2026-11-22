@@ -87,9 +87,13 @@ _PRESETS = {
     "v7_h3": PresetConfig(name="v7_h3", dead_col_law="h3",
                           p_phase_law=False, compress_ucuts=False),
     # R98 nested S_jx32 grids + R113 safe tier + beam-3, wallet up to 16384 B.
+    # (Both budget fields must carry 16384: the fit budget resolves as
+    # `max_wallet_bytes or wallet_bytes`, and the fat wallet IS this
+    # preset's identity - it beat California by spending bytes.)
     "iid_max": PresetConfig(
         name="iid_max", include_safe_tier=True, ledger_mode="beam3",
-        wallet_bytes=16384, star_types=("g4a", "g4b", "g4c", "g4d", "p1", "m2"),
+        wallet_bytes=16384, max_wallet_bytes=16384,
+        star_types=("g4a", "g4b", "g4c", "g4d", "p1", "m2"),
         extra={"nested_grid": True, "p1_bins_k": 32}),
     # R97 H1H2 5% mass threshold + R113 edge freeze + Dykstra centering.
     "ood_fortress": PresetConfig(
@@ -103,9 +107,13 @@ _PRESETS = {
     "scorecard_1d": PresetConfig(
         name="scorecard_1d", enable_pairs=False, oof_merge=True,
         star_types=("g4a", "g4b", "g4c", "g4d"), wallet_bytes=4096),
-    # R71 card_kappa0: 32 quantile shelves without l0 merging (kappa = 0).
+    # R71/R73 card_kappa0: 32 quantile shelves without l0 merging (kappa = 0).
+    # Wallet budget 16384 B: the unregularised card's measured floor is
+    # 12-16 KB (R73/R75: kappa0 = 12837 B); squeezing it to 4096 would
+    # re-regularise exactly what this preset exists to preserve.
     "unregularized_32": PresetConfig(
-        name="unregularized_32", extra={"kappa_zero": True}),
+        name="unregularized_32", extra={"kappa_zero": True},
+        wallet_bytes=16384, max_wallet_bytes=16384),
 }
 
 PRESET_NAMES = tuple(_PRESETS)

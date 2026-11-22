@@ -76,3 +76,21 @@ def test_estimator_constructs_and_fails_cleanly_before_fit():
     m = CardBoostRegressor()
     with pytest.raises(Exception):
         m.predict(np.zeros((2, 3)))
+
+
+def test_all_presets_fit_smoke(small_reg, small_bin):
+    """Every registered preset must fit + decode cleanly on both synthetics.
+
+    Fast-tier guard for the full matrix mode: catches broken preset configs
+    (engine flags, budgets) without running the slow canonical folds.
+    """
+    from cardboost.core import engine
+    for name in PRESET_NAMES:
+        cfg = get_preset(name)
+        budget = cfg.max_wallet_bytes or cfg.wallet_bytes
+        for data in (small_reg, small_bin):
+            res = engine.fit_deploy(data, preset=name)
+            tag = f"{name}/{data['panel_name']}"
+            assert res.moved_train == 0, f"{tag}: moved_train != 0"
+            assert res.maxdiff == 0.0, f"{tag}: decode determinism broken"
+            assert res.v31 <= budget, f"{tag}: wallet {res.v31} > {budget}"

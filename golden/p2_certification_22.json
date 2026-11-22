@@ -1,0 +1,428 @@
+{
+ "schema": "p2_certification_v1",
+ "status": "PASS (both arms: phase and off)",
+ "platform": "macOS-15.3.1-arm64, Python 3.9.6 (Mac cert kit v3)",
+ "aps_deploy_mean": {
+  "phase_Toof": 0.03297697147116147,
+  "phase_14b": 0.033004086175515236,
+  "off_Toof": 0.03297697147116147,
+  "off_14b": 0.033004086175515236
+ },
+ "rows": [
+  {
+   "panel": "aps",
+   "fold": 0,
+   "tag": "aps_f0",
+   "metric_mem": {
+    "Toof": 0.03245986920090248,
+    "14b": 0.03247190850480615
+   },
+   "metric_dec": {
+    "Toof": 0.03245986920090248,
+    "14b": 0.03247190850480615
+   },
+   "metric_fit": {
+    "Toof": 0.03246241347621945,
+    "14b": 0.03247456798315009
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 2631,
+   "arm": "phase"
+  },
+  {
+   "panel": "aps",
+   "fold": 1,
+   "tag": "aps_f1",
+   "metric_mem": {
+    "Toof": 0.03442164921482841,
+    "14b": 0.034476512245135406
+   },
+   "metric_dec": {
+    "Toof": 0.03442164921482841,
+    "14b": 0.034476512245135406
+   },
+   "metric_fit": {
+    "Toof": 0.03444367106412958,
+    "14b": 0.034503811330214545
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 2916,
+   "arm": "phase"
+  },
+  {
+   "panel": "aps",
+   "fold": 2,
+   "tag": "aps_f2",
+   "metric_mem": {
+    "Toof": 0.032049395997753534,
+    "14b": 0.03206383777660417
+   },
+   "metric_dec": {
+    "Toof": 0.032049395997753534,
+    "14b": 0.03206383777660417
+   },
+   "metric_fit": {
+    "Toof": 0.0320348890180864,
+    "14b": 0.03204952124550533
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 2843,
+   "arm": "phase"
+  },
+  {
+   "panel": "california_random",
+   "fold": 1,
+   "tag": "california_random_f1",
+   "metric_mem": {
+    "R2": 0.8091864258946289
+   },
+   "metric_dec": {
+    "R2": 0.8091864258946289
+   },
+   "metric_fit": {
+    "R2": 0.8123568746852035
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 2233,
+   "arm": "phase"
+  },
+  {
+   "panel": "california_random",
+   "fold": 2,
+   "tag": "california_random_f2",
+   "metric_mem": {
+    "R2": 0.7998188853112789
+   },
+   "metric_dec": {
+    "R2": 0.7998188853112789
+   },
+   "metric_fit": {
+    "R2": 0.8015329644934047
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 2758,
+   "arm": "phase"
+  },
+  {
+   "panel": "california_random",
+   "fold": 3,
+   "tag": "california_random_f3",
+   "metric_mem": {
+    "R2": 0.8223794671472646
+   },
+   "metric_dec": {
+    "R2": 0.8223794671472646
+   },
+   "metric_fit": {
+    "R2": 0.8245125953419035
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 2843,
+   "arm": "phase"
+  },
+  {
+   "panel": "california_random",
+   "fold": 4,
+   "tag": "california_random_f4",
+   "metric_mem": {
+    "R2": 0.7963360244591577
+   },
+   "metric_dec": {
+    "R2": 0.7963360244591577
+   },
+   "metric_fit": {
+    "R2": 0.7969215351374819
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 2621,
+   "arm": "phase"
+  },
+  {
+   "panel": "california_spatial",
+   "fold": 1,
+   "tag": "california_spatial_f1",
+   "metric_mem": {
+    "R2": 0.6394136031295696
+   },
+   "metric_dec": {
+    "R2": 0.6394136031295696
+   },
+   "metric_fit": {
+    "R2": 0.6403926545579548
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 2702,
+   "arm": "phase"
+  },
+  {
+   "panel": "california_spatial",
+   "fold": 2,
+   "tag": "california_spatial_f2",
+   "metric_mem": {
+    "R2": 0.5389006480158873
+   },
+   "metric_dec": {
+    "R2": 0.5389006480158873
+   },
+   "metric_fit": {
+    "R2": 0.5636618674835763
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 2818,
+   "arm": "phase"
+  },
+  {
+   "panel": "california_spatial",
+   "fold": 3,
+   "tag": "california_spatial_f3",
+   "metric_mem": {
+    "R2": 0.7333822297674049
+   },
+   "metric_dec": {
+    "R2": 0.7333822297674049
+   },
+   "metric_fit": {
+    "R2": 0.7448786941595351
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 3074,
+   "arm": "phase"
+  },
+  {
+   "panel": "california_spatial",
+   "fold": 4,
+   "tag": "california_spatial_f4",
+   "metric_mem": {
+    "R2": -0.058009008379776184
+   },
+   "metric_dec": {
+    "R2": -0.058009008379776184
+   },
+   "metric_fit": {
+    "R2": -0.06041584763317864
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 2904,
+   "arm": "phase"
+  },
+  {
+   "panel": "aps",
+   "fold": 0,
+   "tag": "aps_f0",
+   "metric_mem": {
+    "Toof": 0.03245986920090248,
+    "14b": 0.03247190850480615
+   },
+   "metric_dec": {
+    "Toof": 0.03245986920090248,
+    "14b": 0.03247190850480615
+   },
+   "metric_fit": {
+    "Toof": 0.03246241347621945,
+    "14b": 0.03247456798315009
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 2631,
+   "arm": "off"
+  },
+  {
+   "panel": "aps",
+   "fold": 1,
+   "tag": "aps_f1",
+   "metric_mem": {
+    "Toof": 0.03442164921482841,
+    "14b": 0.034476512245135406
+   },
+   "metric_dec": {
+    "Toof": 0.03442164921482841,
+    "14b": 0.034476512245135406
+   },
+   "metric_fit": {
+    "Toof": 0.03444367106412958,
+    "14b": 0.034503811330214545
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 2916,
+   "arm": "off"
+  },
+  {
+   "panel": "aps",
+   "fold": 2,
+   "tag": "aps_f2",
+   "metric_mem": {
+    "Toof": 0.032049395997753534,
+    "14b": 0.03206383777660417
+   },
+   "metric_dec": {
+    "Toof": 0.032049395997753534,
+    "14b": 0.03206383777660417
+   },
+   "metric_fit": {
+    "Toof": 0.0320348890180864,
+    "14b": 0.03204952124550533
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 2843,
+   "arm": "off"
+  },
+  {
+   "panel": "california_random",
+   "fold": 1,
+   "tag": "california_random_f1",
+   "metric_mem": {
+    "R2": 0.8091864258946289
+   },
+   "metric_dec": {
+    "R2": 0.8091864258946289
+   },
+   "metric_fit": {
+    "R2": 0.8123568746852035
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 2960,
+   "arm": "off"
+  },
+  {
+   "panel": "california_random",
+   "fold": 2,
+   "tag": "california_random_f2",
+   "metric_mem": {
+    "R2": 0.7998188853112789
+   },
+   "metric_dec": {
+    "R2": 0.7998188853112789
+   },
+   "metric_fit": {
+    "R2": 0.8015329644934047
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 3470,
+   "arm": "off"
+  },
+  {
+   "panel": "california_random",
+   "fold": 3,
+   "tag": "california_random_f3",
+   "metric_mem": {
+    "R2": 0.8223794671472646
+   },
+   "metric_dec": {
+    "R2": 0.8223794671472646
+   },
+   "metric_fit": {
+    "R2": 0.8245125953419035
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 3632,
+   "arm": "off"
+  },
+  {
+   "panel": "california_random",
+   "fold": 4,
+   "tag": "california_random_f4",
+   "metric_mem": {
+    "R2": 0.7963360244591577
+   },
+   "metric_dec": {
+    "R2": 0.7963360244591577
+   },
+   "metric_fit": {
+    "R2": 0.7969215351374819
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 3373,
+   "arm": "off"
+  },
+  {
+   "panel": "california_spatial",
+   "fold": 1,
+   "tag": "california_spatial_f1",
+   "metric_mem": {
+    "R2": 0.6394136031295696
+   },
+   "metric_dec": {
+    "R2": 0.6394136031295696
+   },
+   "metric_fit": {
+    "R2": 0.6403926545579548
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 3559,
+   "arm": "off"
+  },
+  {
+   "panel": "california_spatial",
+   "fold": 2,
+   "tag": "california_spatial_f2",
+   "metric_mem": {
+    "R2": 0.5389006480158873
+   },
+   "metric_dec": {
+    "R2": 0.5389006480158873
+   },
+   "metric_fit": {
+    "R2": 0.5636618674835763
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 3860,
+   "arm": "off"
+  },
+  {
+   "panel": "california_spatial",
+   "fold": 3,
+   "tag": "california_spatial_f3",
+   "metric_mem": {
+    "R2": 0.7179004584899005
+   },
+   "metric_dec": {
+    "R2": 0.7179004584899005
+   },
+   "metric_fit": {
+    "R2": 0.733036224378184
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 4079,
+   "arm": "off"
+  },
+  {
+   "panel": "california_spatial",
+   "fold": 4,
+   "tag": "california_spatial_f4",
+   "metric_mem": {
+    "R2": -0.058009008379776184
+   },
+   "metric_dec": {
+    "R2": -0.058009008379776184
+   },
+   "metric_fit": {
+    "R2": -0.06041584763317864
+   },
+   "maxdiff_mem_dec": 0.0,
+   "moved_train": 0,
+   "v31": 3792,
+   "arm": "off"
+  }
+ ],
+ "note": "22 certified CHECK rows (11 phase + 11 off) from Mac r87_1.jsonl; verified 22/22 bit-exact with golden/matrix_baseline.json."
+}

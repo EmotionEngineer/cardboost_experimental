@@ -31,7 +31,7 @@
       "cal_rand_f0_v31": 2548,
       "cal_wallet_max": 2888
     },
-    "folds": "PHASE family = card_v8_base = r87_1 arm=phase (p_phase_law=True + COMPRESS_UCUTS 'Formula 2'): TЗ anchors 2548 B / anneal 14b ~0.02605 (gate anchor .0260495) / anneal wallets 1297/1293/1176 / cal wallet list 2548/2232/2758/2843/2621/2703/2415/2888/2747/1939",
+    "folds": "PHASE family = card_v8_base = r87_1 arm=phase (p_phase_law=True + COMPRESS_UCUTS 'Formula 2'): spec anchors 2548 B / anneal 14b ~0.02605 (gate anchor .0260495) / anneal wallets 1297/1293/1176 / cal wallet list 2548/2232/2758/2843/2621/2703/2415/2888/2747/1939",
     "h3_folds": "H3 control family = r87_4 arm=off (= r87_1 arm=off) = report SS5.1 panel rows: 3591 B / anneal 14b deploy-mean 0.0281425 / anneal wallets 1491/1451/1323; per-fold rows are the deployed-base ground truth on the canonical m32-portrait protocol",
     "measurement_bases": "0.0260495 = R109 phase gate anchor (round record, bit-exact r86_4_restore; R108 fold-mean recording 0.02607/0.02605 fit/dec); 0.0281425 = H3-family anneal deploy-mean - different measurement bases AND different modes, per report S3.1 note",
     "packaging": "wallet = gzip-9 stream of the container (cal_rand_f0: raw 5353 B uncompressed -> 3591 B m32-portrait wallet / 2548 B Formula-2 packed wallet); CLI gzip = wallet + 12 B",
