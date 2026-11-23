@@ -25,6 +25,8 @@ import r76_stage31 as S
 import r71_universal as r71
 import r77_mech as R
 
+C2D_HALF_GUARD = False
+
 r71 = L.r71  # loader-verified engine handle
 
 # ---- run configuration (step-1 defaults; r77_b overrides for step 2) --------
@@ -232,7 +234,11 @@ class Ledger:
                     if min(min(bg) for bg in axis_bg) < -(self.kappa_block + self.lnM):
                         fragile = True
                 if h1 * h2 < 0:
-                    fragile = True
+                    c2d_ok = (C2D_HALF_GUARD and atype in ("p1", "m2")
+                              and np.all(gains > 0)
+                              and min(h1, h2) > -0.25 * (self.kappa_block + self.lnM))
+                    if not c2d_ok:
+                        fragile = True
             dq = 0  # filled by caller when needed
             out[tag] = dict(tag=tag, type=atype, j=j, k=k,
                             gain=float(gains.sum()), subs=gains.round(3).tolist(),

@@ -92,6 +92,44 @@ def test_budget_identity():
         assert (cfg.max_wallet_bytes or cfg.wallet_bytes) == budget, name
 
 
+# ------------------------------------------------------ estimator resolution
+def test_estimator_defaults_inherit_named_presets():
+    """Public estimator defaults must not erase named preset configuration."""
+    from cardboost.estimators import CardBoostRegressor, CardBoostClassifier
+    from cardboost.presets import PRESET_NAMES, get_preset
+
+    for estimator_cls in (CardBoostRegressor, CardBoostClassifier):
+        for name in PRESET_NAMES:
+            estimator = estimator_cls(preset=name)
+            overrides = estimator._overrides()
+            assert overrides == {}, (estimator_cls.__name__, name, overrides)
+            assert get_preset(name).with_overrides(**overrides) == get_preset(name)
+
+
+def test_estimator_explicit_override_preserves_other_preset_fields():
+    """An explicit knob changes only that knob; unrelated preset identity survives."""
+    from cardboost.estimators import CardBoostRegressor
+    from cardboost.presets import get_preset
+
+    estimator = CardBoostRegressor(preset="iid_max", max_bins=64)
+    overrides = estimator._overrides()
+    assert overrides == {"max_bins": 64}
+    resolved = get_preset("iid_max").with_overrides(**overrides)
+    assert resolved.max_bins == 64
+    assert resolved.max_wallet_bytes == 16384
+    assert resolved.ledger_mode == "beam3"
+    assert resolved.include_safe_tier is True
+
+
+def test_estimator_atom_family_override_is_explicit_only():
+    from cardboost.estimators import CardBoostRegressor
+
+    assert CardBoostRegressor(preset="v8")._overrides() == {}
+    assert CardBoostRegressor(preset="v8", atom_families=())._overrides() == {
+        "star_types": ()
+    }
+
+
 # -------------------------------------------------------- fingerprint tests
 def _fit(data, preset, overrides=None):
     import tempfile

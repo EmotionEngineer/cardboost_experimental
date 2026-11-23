@@ -21,6 +21,9 @@ import r76_mech as M
 import r76_stage5 as T   # quantize_levels, collapse_runs
 
 
+ONE_SIDED_F16_RECUT = False
+
+
 def _lattice_recut(x_sorted, cuts, use_f16=True):
     """Rebuild cut values under the routing lattice; returns (rec_cuts, codes, vals)."""
     rec, codes, vals = [], [], bytearray()
@@ -34,6 +37,9 @@ def _lattice_recut(x_sorted, cuts, use_f16=True):
         if use_f16:
             d = np.float16(cut - prev)
             t = prev + float(np.float64(d))
+            if ONE_SIDED_F16_RECUT and t > cut:
+                d = np.nextafter(d, np.float16(-np.inf))
+                t = prev + float(np.float64(d))
             if float(xl) < t <= float(xr):
                 vals += struct.pack("<e", float(d))
                 codes.append(0)

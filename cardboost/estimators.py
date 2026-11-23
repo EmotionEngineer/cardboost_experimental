@@ -55,15 +55,16 @@ def _temperature(spec):
 
 class _CardBoostBase(BaseEstimator):
     # ---- constructor: sklearn clone contract (store args verbatim) -------
-    def __init__(self, preset="v8", max_bins=32, lr="formula", km="formula",
-                 dead_col_law=None, currency="h3", enable_pairs=True,
-                 atom_families=("g4", "p1", "m2"), ledger_mode="greedy",
-                 warm_passes=6, edge_freeze=False, hmin_frac=0.0,
-                 oof_merge=False, calibration="auto",
-                 enable_log_selector=False, max_wallet_bytes=4096,
-                 verify_bit_exact=True, deterministic_ulp=True, n_jobs=1,
-                 random_state=109, potts_objective="quadratic",
-                 include_qmiss=False, feature_names=None):
+    def __init__(self, preset="v8", max_bins=None, lr=None, km=None,
+                 dead_col_law=None, currency=None, enable_pairs=None,
+                 atom_families=None, ledger_mode=None,
+                 warm_passes=None, edge_freeze=None, hmin_frac=None,
+                 oof_merge=None, calibration=None,
+                 enable_log_selector=None, max_wallet_bytes=None,
+                 verify_bit_exact=None, deterministic_ulp=None, n_jobs=None,
+                 random_state=None, potts_objective=None,
+                 include_qmiss=None, include_safe_tier=None,
+                 feature_names=None):
         self.preset = preset
         self.max_bins = max_bins
         self.lr = lr
@@ -86,44 +87,64 @@ class _CardBoostBase(BaseEstimator):
         self.random_state = random_state
         self.potts_objective = potts_objective
         self.include_qmiss = include_qmiss
+        self.include_safe_tier = include_safe_tier
         self.feature_names = feature_names
 
     # ---- preset resolution ---------------------------------------------
     def _overrides(self) -> dict:
-        fam2star = {"g4": ("g4a", "g4b", "g4c", "g4d"), "p1": ("p1",),
-                    "m2": ("m2",), "p1_2a": ("p1",), "safe_grid": (),
-                    "msum": ("m2",), "q_miss": ()}
-        star = []
-        for f in self.atom_families:
-            star.extend(fam2star.get(f, ()))
-        ov = dict(
-            max_bins=self.max_bins, lr=self.lr, km=self.km,
-            warm_passes=self.warm_passes, edge_freeze=self.edge_freeze,
-            hmin_frac=self.hmin_frac, oof_merge=self.oof_merge,
-            enable_log_selector=self.enable_log_selector,
-            max_wallet_bytes=self.max_wallet_bytes,
-            ledger_mode=self.ledger_mode, n_jobs=self.n_jobs,
-            random_state=self.random_state,
-            potts_objective=self.potts_objective,
-            include_qmiss=self.include_qmiss,
-            verify_bit_exact=self.verify_bit_exact,
-            deterministic_ulp=self.deterministic_ulp,
-        )
-        if star:
-            ov["star_types"] = tuple(dict.fromkeys(
-                ("g4a", "g4b", "g4c", "g4d", "p1", "m2") if self.enable_pairs
-                else ("g4a", "g4b", "g4c", "g4d")))
-        else:
-            ov["star_types"] = (("g4a", "g4b", "g4c", "g4d", "p1", "m2")
-                                if self.enable_pairs
-                                else ("g4a", "g4b", "g4c", "g4d"))
+        """Return only user-explicit overrides; otherwise inherit the named preset.
+
+        ``None`` is the estimator's sentinel for "use the preset value".  In
+        particular, constructor defaults must not silently replace a preset's
+        wallet, solver, objective, or post-fit layers.
+        """
+        get_preset(self.preset)  # validate early
+        raw = {
+            "max_bins": self.max_bins,
+            "lr": self.lr,
+            "km": self.km,
+            "currency": self.currency,
+            "warm_passes": self.warm_passes,
+            "edge_freeze": self.edge_freeze,
+            "hmin_frac": self.hmin_frac,
+            "oof_merge": self.oof_merge,
+            "enable_log_selector": self.enable_log_selector,
+            "max_wallet_bytes": self.max_wallet_bytes,
+            "ledger_mode": self.ledger_mode,
+            "n_jobs": self.n_jobs,
+            "random_state": self.random_state,
+            "potts_objective": self.potts_objective,
+            "include_qmiss": self.include_qmiss,
+            "include_safe_tier": self.include_safe_tier,
+            "calibration": self.calibration,
+            "verify_bit_exact": self.verify_bit_exact,
+            "deterministic_ulp": self.deterministic_ulp,
+            "enable_pairs": self.enable_pairs,
+        }
+        ov = {key: value for key, value in raw.items() if value is not None}
+
+        # atom_families is a convenience alias for the lower-level star_types
+        # engine option.  Leaving it unset preserves the preset's own families.
+        if self.atom_families is not None:
+            fam2star = {"g4": ("g4a", "g4b", "g4c", "g4d"),
+                        "p1": ("p1",), "m2": ("m2",),
+                        "p1_2a": ("p1",), "safe_grid": (),
+                        "msum": ("m2",), "q_miss": ()}
+            star = []
+            for family in self.atom_families:
+                star.extend(fam2star.get(family, ()))
+            effective_pairs = (self.enable_pairs if self.enable_pairs is not None
+                               else get_preset(self.preset).enable_pairs)
+            if effective_pairs is False:
+                star = [s for s in star if s in ("g4a", "g4b", "g4c", "g4d")]
+            ov["star_types"] = tuple(dict.fromkeys(star))
+
         if self.dead_col_law is not None:
             # explicit mode override: "phase_v32" -> phase arm, "h3" -> control
             law = self.dead_col_law == "phase_v32"
             ov["dead_col_law"] = self.dead_col_law
             ov["p_phase_law"] = law
             ov["compress_ucuts"] = law
-        get_preset(self.preset)  # validate early
         return ov
 
     def _fit_engine(self, X, y, kind, n_classes=0):
@@ -134,9 +155,13 @@ class _CardBoostBase(BaseEstimator):
                     geo=None, panel_name="custom")
         if n_classes:
             data["K"] = n_classes
-        res = engine.fit_deploy(data, preset=self.preset,
-                                overrides=self._overrides())
-        if self.verify_bit_exact and (res.maxdiff != 0.0 or res.moved_train != 0):
+        overrides = self._overrides()
+        resolved = get_preset(self.preset).with_overrides(**overrides)
+        self.wallet_budget_ = resolved.max_wallet_bytes or resolved.wallet_bytes
+        res = engine.fit_deploy(data, preset=self.preset, overrides=overrides)
+        verify = (self.verify_bit_exact if self.verify_bit_exact is not None
+                  else resolved.verify_bit_exact)
+        if verify and (res.maxdiff != 0.0 or res.moved_train != 0):
             raise RuntimeError(
                 f"bit-exact certification failed: maxdiff={res.maxdiff}, "
                 f"moved_train={res.moved_train}")
@@ -183,6 +208,8 @@ class _CardBoostBase(BaseEstimator):
         obj.n_classes_ = len(dec.b0) if dec.kind == "multiclass" else 0
         obj.feature_names_ = None
         obj.Tcal_ = obj.spec14_ = None
+        cfg = get_preset(obj.preset).with_overrides(**obj._overrides())
+        obj.wallet_budget_ = cfg.max_wallet_bytes or cfg.wallet_bytes
         return obj
 
     def certify(self, X_train, X_test=None) -> dict:
@@ -203,7 +230,7 @@ class _CardBoostBase(BaseEstimator):
         max_diff = float(np.max(np.abs(s1 - s2))) if len(s1) else 0.0
         reemit = codec.container_v32.from_bytes(
             codec.container_v32.to_bytes(self.card_,
-                                         budget=self.max_wallet_bytes))
+                                         budget=getattr(self, "wallet_budget_", self.max_wallet_bytes)))
         s3 = np.asarray(C.model_score(reemit, X), float)
         drift = float(np.max(np.abs(s1 - s3))) if len(s1) else 0.0
         return dict(wallet_bytes=self.v31_, max_diff=max_diff,
@@ -227,14 +254,16 @@ class _CardBoostBase(BaseEstimator):
 
     def to_qr(self, path, **kw) -> str:
         check_is_fitted(self, "card_")
-        return codec.qr_export.to_qr(self.card_, path,
-                                     budget=self.max_wallet_bytes, **kw)
+        return codec.qr_export.to_qr(
+            self.card_, path,
+            budget=getattr(self, "wallet_budget_", self.max_wallet_bytes), **kw)
 
     def wallet(self, X=None):
         check_is_fitted(self, "card_")
         Xtr = np.zeros((1, 1)) if X is None else np.asarray(X, float)
-        return codec.container_v32.wallet(self.card_, Xtr,
-                                          budget=self.max_wallet_bytes)
+        return codec.container_v32.wallet(
+            self.card_, Xtr,
+            budget=getattr(self, "wallet_budget_", self.max_wallet_bytes))
 
 
 class CardBoostRegressor(_CardBoostBase, RegressorMixin):

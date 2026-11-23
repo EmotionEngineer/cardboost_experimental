@@ -61,6 +61,9 @@ class PresetConfig:
     include_qmiss: bool = False              # R112 QMissAtom (post-fit)
     include_safe_tier: bool = False          # R113 SafeGridAtom (post-fit, experimental)
     include_msum: bool = False               # R104/R105 MSumAtom in the star pool
+    postselect_rank: bool = False            # fit rank grid only during deployed full-fold refit
+    c2d_half_guard: bool = False              # C₂d all-positive-subfold half-bag exception
+    one_sided_f16_recut: bool = False         # B: prevent f16 cut recut from crossing cut
     wallet_bytes: int = 4096                 # hard container contract
     potts_objective: str = "quadratic"       # "quadratic" | "exact_dev" | "qfix_dev"
     max_wallet_bytes: Optional[int] = 4096   # public alias -> wallet_bytes
@@ -81,6 +84,11 @@ _PRESETS = {
     # COMPRESS_UCUTS (Formula 2 live-cut packing).  Golden target: "folds" in
     # golden/canonical_r87.json (2548 B-family wallets, anneal 14b ~0.02605).
     "v8": PresetConfig(name="v8"),
+    # Post-Select + B + C₂d validation arm. Kept as a separate named preset:
+    # v8 defaults and its golden identity remain unchanged.
+    "postselect_B_C2d": PresetConfig(
+        name="postselect_B_C2d", postselect_rank=True, c2d_half_guard=True,
+        one_sided_f16_recut=True),
     # R84--R85 canonical harness = the H3 control arm (r87_4 `--arm off` /
     # r87_1 `--arm off`): p_phase_law=False, COMPRESS_UCUTS=False.  Golden
     # target: "h3_folds" (3591 B-family wallets, anneal 14b ~0.02814).

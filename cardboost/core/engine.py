@@ -48,6 +48,10 @@ def apply_config(panel: str, cfg: PresetConfig) -> None:
     R.HANDLE_A = False
     R.QGATE = None
     R.R84_FIT_RANK = False
+    R.POSTSELECT_RANK = bool(cfg.postselect_rank)
+    R.POSTSELECT_RANK_N = None
+    T.C2D_HALF_GUARD = bool(cfg.c2d_half_guard)
+    C.ONE_SIDED_F16_RECUT = bool(cfg.one_sided_f16_recut)
     # R71/R73 card_kappa0 (unregularized_32): l0 merge price -> 0
     # (r77_stage: kappa_mult = law_use if km == "formula" else float(km)).
     km_eff = 0.0 if cfg.extra.get("kappa_zero") else cfg.km
@@ -164,6 +168,7 @@ def fit_fold(panel: str, fold: int, data: dict,
     os.makedirs(save_dir, exist_ok=True)
 
     apply_config(panel, cfg)
+    R.POSTSELECT_RANK_N = len(Xtr) if cfg.postselect_rank else None
     sig2 = 1.0
     if panel.startswith("california"):
         sig2 = C1.sigma2_oof(Xtr, ytr)
@@ -272,6 +277,10 @@ def fit_fold(panel: str, fold: int, data: dict,
         quant_gap = float(np.max(np.abs(s_fit - s_dec))) if len(s_fit) else 0.0
     finally:
         _reset_cost()
+        R.POSTSELECT_RANK = False
+        R.POSTSELECT_RANK_N = None
+        T.C2D_HALF_GUARD = False
+        C.ONE_SIDED_F16_RECUT = False
         if not keep_work:
             shutil.rmtree(save_dir, ignore_errors=True)
 
@@ -309,6 +318,7 @@ def fit_deploy(data: dict, preset: str = "v8", overrides: Optional[dict] = None,
     os.makedirs(save_dir, exist_ok=True)
 
     apply_config(panel, cfg)
+    R.POSTSELECT_RANK_N = len(X[tr_idx]) if cfg.postselect_rank else None
     if kind == "regression":
         sig2 = C1.sigma2_oof(X[tr_idx], y[tr_idx])
         U.R84_COST["scale"] = 1.0 / sig2
@@ -328,6 +338,8 @@ def fit_deploy(data: dict, preset: str = "v8", overrides: Optional[dict] = None,
         # final deploy refit over ALL rows with the admitted atom set
         fac = W.calib_factory(admitted, n_classes, oof_merge=cfg.oof_merge,
                               seed=cfg.random_state)
+        if cfg.postselect_rank:
+            R.POSTSELECT_RANK_N = len(y)
         card = fac(X, y, kind)
         # ---- optional post-fit experimental atoms (presets) --------------
         mech: Dict[str, Any] = {}
@@ -401,6 +413,10 @@ def fit_deploy(data: dict, preset: str = "v8", overrides: Optional[dict] = None,
         quant_gap = float(np.max(np.abs(s_fit - s_dec))) if len(s_fit) else 0.0
     finally:
         _reset_cost()
+        R.POSTSELECT_RANK = False
+        R.POSTSELECT_RANK_N = None
+        T.C2D_HALF_GUARD = False
+        C.ONE_SIDED_F16_RECUT = False
         shutil.rmtree(save_dir, ignore_errors=True)
 
     return DeployResult(card=card, dec_card=dec_card, admitted=admitted,

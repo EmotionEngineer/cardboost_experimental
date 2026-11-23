@@ -38,6 +38,8 @@ MARG_BINS = 8
 P1_BINS = 8             # p1 grid size (w1_p1_12only sets 12)
 P1_SHRINK_POST = False  # user 2.2: shrink AFTER Potts+RSR
 R84_FIT_RANK = False    # R84 canary 1: fit g4 atoms against the quantized 96-knot
+POSTSELECT_RANK = False # rank grid only on deployed full-training refit, never screening
+POSTSELECT_RANK_N = None
 P1_SWAP = None          # R84 canary 2: '2A' | '2B' -> slot p1 builds the swap atom (r84_p1swap)
                         # rank grid (make_rank_grid) so fit == deploy at score level.
 
@@ -647,7 +649,17 @@ def make_atom77(atype, j, k, card, X, pair_bins=None):
     xs_k = np.sort(X[:, k][np.isfinite(X[:, k])])
     if atype in ("g4a", "g4b", "g4c", "g4d", "g4e", "g4f"):
         a, b = dict((t, (aa, bb)) for t, aa, bb in RAYS)[atype]
-        return ProjRayAtom(j, k, a, b, xs_j, xs_k)
+        atom = ProjRayAtom(j, k, a, b, xs_j, xs_k)
+        # Post-Select mode deliberately leaves candidate screening rank-off;
+        # only the final deployed refit on the complete training fold gets the
+        # serialized rank grid (matching the experimental protocol).
+        if (POSTSELECT_RANK and POSTSELECT_RANK_N is not None
+                and len(X) == POSTSELECT_RANK_N):
+            from r76_container31 import make_rank_grid
+            gj, rgj = make_rank_grid(atom.xs_j)
+            gk, rgk = make_rank_grid(atom.xs_k)
+            atom.rank_interp = (gj, rgj, gk, rgk)
+        return atom
     if atype == "p1":
         if P1_SWAP:
             import r84_p1swap as _PS
